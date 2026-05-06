@@ -78,6 +78,55 @@ button {
   padding: 0 28px 48px;
 }
 
+.support-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: center;
+  margin-top: 24px;
+  padding: 22px;
+  border: 1px solid #deded6;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.support-section h2 {
+  margin: 0;
+  color: #20211f;
+  font-size: 1.25rem;
+}
+
+.support-section p {
+  max-width: 720px;
+  margin: 8px 0 0;
+  color: #555951;
+  line-height: 1.7;
+}
+
+.support-kicker {
+  margin: 0 0 6px !important;
+  color: #6b6f68 !important;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.support-actions {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.support-message {
+  position: absolute;
+  right: 0;
+  bottom: -26px;
+  color: #2f6b4f;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
 .workspace {
   display: grid;
   grid-template-columns: minmax(420px, 0.9fr) minmax(520px, 1.1fr);
@@ -149,6 +198,11 @@ button {
 
 .button.secondary {
   background: #f7f7f3;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
 }
 
 .button.small {
@@ -627,6 +681,24 @@ textarea:focus {
 
   .app-shell {
     padding: 0 18px 32px;
+  }
+
+  .support-section {
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+
+  .support-actions {
+    justify-content: stretch;
+  }
+
+  .support-actions .button {
+    width: 100%;
+  }
+
+  .support-message {
+    position: static;
+    min-height: 20px;
   }
 
   .action-bar {

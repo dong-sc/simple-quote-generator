@@ -111,3 +111,21 @@ base: "/"
 
 - Buy Me a Coffee：placeholder
 - GitHub Sponsors：placeholder
+
+### 設定 Buy Me a Coffee / GitHub Sponsors
+
+支持連結集中放在 `src/utils/projectLinks.ts`。
+
+建立 Buy Me a Coffee 或 GitHub Sponsors 後，將對應網址填入：
+
+```ts
+export const buyMeACoffeeUrl = "https://www.buymeacoffee.com/your-account";
+export const githubSponsorsUrl = "https://github.com/sponsors/your-account";
+```
+
+若兩者都留空，網站會顯示「支持連結準備中」。
+
+### 社群分享連結
+
+網站底部已提供「分享這個工具」與「複製分享連結」。
+分享文字與正式網址同樣集中在 `src/utils/projectLinks.ts`，可依專案語氣調整。

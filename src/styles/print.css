@@ -12,7 +12,8 @@
 
   .site-header,
   .form-pane,
-  .action-bar {
+  .action-bar,
+  .support-section {
     display: none !important;
   }
 

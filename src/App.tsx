@@ -3,6 +3,7 @@ import { ActionBar } from './components/ActionBar';
 import { Header } from './components/Header';
 import { QuoteForm } from './components/QuoteForm';
 import { QuotePreview } from './components/QuotePreview';
+import { SupportSection } from './components/SupportSection';
 import { calculateTotals } from './utils/calculation';
 import { clearQuoteData, loadQuoteData, saveQuoteData } from './utils/storage';
 import { generateQuotePlainText } from './utils/quoteText';
@@ -98,6 +99,7 @@ export default function App() {
           </div>
           <QuotePreview data={quoteData} totals={totals} />
         </section>
+        <SupportSection />
       </main>
     </>
   );
