@@ -445,6 +445,114 @@ textarea:focus {
   display: none;
 }
 
+.print-measure-container {
+  position: absolute;
+  top: 0;
+  left: -10000px;
+  width: 188mm;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.print-measure-container .quote-preview {
+  width: 188mm;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+  color: #222222;
+  font-size: 9.5pt;
+}
+
+.print-measure-container .preview-header {
+  gap: 12mm;
+  padding-bottom: 5mm;
+  border-bottom-width: 1.5pt;
+}
+
+.print-measure-container .preview-party-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12mm;
+  margin-top: 6mm;
+}
+
+.print-measure-container .preview-party p,
+.print-measure-container .preview-meta p {
+  margin-top: 2mm;
+}
+
+.print-measure-container .preview-block {
+  margin-top: 6mm;
+}
+
+.print-measure-container .preview-supplements {
+  margin-top: 6mm;
+  padding-top: 4mm;
+  border-top: 1px solid #d6d6d6;
+  break-inside: avoid;
+}
+
+.print-measure-container .preview-supplements .preview-block {
+  margin-top: 3.5mm;
+}
+
+.print-measure-container .preview-table {
+  font-size: 8.7pt;
+}
+
+.print-measure-container .preview-table th,
+.print-measure-container .preview-table td {
+  padding: 2.4mm 2mm;
+}
+
+.print-measure-container .preview-header h2 {
+  font-size: 20pt;
+}
+
+.print-measure-container .preview-party h3,
+.print-measure-container .preview-block h3,
+.print-measure-container .preview-block h4,
+.print-measure-container .preview-supplements > h3 {
+  margin-bottom: 2.5mm;
+  font-size: 10pt;
+}
+
+.print-measure-container .preview-party strong {
+  margin-bottom: 2mm;
+  font-size: 10pt;
+}
+
+.print-measure-container .preview-meta {
+  min-width: 44mm;
+  font-size: 8.8pt;
+}
+
+.print-measure-container .preview-label {
+  margin-bottom: 2mm;
+  font-size: 7.5pt;
+}
+
+.print-measure-container .preview-totals {
+  max-width: 76mm;
+  gap: 1.8mm;
+  margin-top: 4mm;
+  padding-top: 3mm;
+  font-size: 9pt;
+}
+
+.print-measure-container .preview-total-main,
+.print-measure-container .preview-total-estimate {
+  margin-top: 1.5mm;
+  padding-top: 2.2mm;
+  font-size: 10pt;
+}
+
+.print-measure-container .multiline {
+  line-height: 1.5;
+}
+
 .preview-table-wrap {
   overflow-x: auto;
 }

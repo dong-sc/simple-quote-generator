@@ -154,6 +154,6 @@
   }
 
   .print-page-footer::after {
-    content: "第 " counter(page) " 頁 / 共 " counter(pages) " 頁";
+    content: "第 " counter(page) " 頁 / 預估共 " attr(data-total-pages) " 頁";
   }
 }

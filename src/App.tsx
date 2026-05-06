@@ -15,6 +15,34 @@ function getPrintableTitle(title: string): string {
   return `${safeTitle}_報價單`;
 }
 
+function estimatePrintPageCount(): number {
+  const preview = document.querySelector<HTMLElement>('.quote-preview');
+  if (!preview) {
+    return 1;
+  }
+
+  const measuringContainer = document.createElement('div');
+  measuringContainer.className = 'print-measure-container';
+
+  const clonedPreview = preview.cloneNode(true) as HTMLElement;
+  clonedPreview.querySelector('.print-page-footer')?.remove();
+  measuringContainer.append(clonedPreview);
+  document.body.append(measuringContainer);
+
+  const printablePageHeightPx = (274 / 25.4) * 96;
+  const measuredHeight = clonedPreview.scrollHeight;
+  measuringContainer.remove();
+
+  return Math.max(1, Math.ceil(measuredHeight / printablePageHeightPx));
+}
+
+function setPrintTotalPages(pageCount: number): void {
+  const footer = document.querySelector<HTMLElement>('.print-page-footer');
+  if (footer) {
+    footer.dataset.totalPages = String(pageCount);
+  }
+}
+
 export default function App() {
   const [quoteData, setQuoteData] = useState<QuoteData>(() => loadQuoteData());
   const [copyMessage, setCopyMessage] = useState('');
@@ -38,10 +66,14 @@ export default function App() {
 
   function handlePrint() {
     const originalTitle = document.title;
+    const estimatedPageCount = estimatePrintPageCount();
+
     document.title = getPrintableTitle(quoteData.title);
+    setPrintTotalPages(estimatedPageCount);
 
     const restoreTitle = () => {
       document.title = originalTitle;
+      setPrintTotalPages(1);
       window.removeEventListener('afterprint', restoreTitle);
     };
 
