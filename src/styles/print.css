@@ -1,0 +1,72 @@
+@page {
+  size: A4;
+  margin: 14mm;
+}
+
+@media print {
+  :root,
+  body {
+    background: #ffffff;
+  }
+
+  .site-header,
+  .form-pane,
+  .action-bar {
+    display: none !important;
+  }
+
+  .app-shell {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .workspace {
+    display: block;
+  }
+
+  .preview-pane {
+    position: static;
+  }
+
+  .quote-preview {
+    width: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    color: #222222;
+  }
+
+  .preview-header,
+  .preview-party-grid,
+  .preview-block,
+  .preview-totals {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .preview-table {
+    break-inside: auto;
+    font-size: 10.5pt;
+  }
+
+  .preview-table tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .preview-table th,
+  .preview-table td {
+    border-color: #b8b8b8;
+  }
+
+  .preview-header h2 {
+    font-size: 24pt;
+  }
+
+  .preview-party h3,
+  .preview-block h3 {
+    font-size: 11pt;
+  }
+}
