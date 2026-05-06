@@ -118,6 +118,35 @@ button {
   gap: 8px;
 }
 
+.boba-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 164px;
+  height: 40px;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 12px;
+  background: #ad5138;
+  color: #f8e0be;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.boba-button:hover {
+  text-decoration: none;
+}
+
+.boba-button img {
+  height: 100%;
+  width: auto;
+}
+
+.boba-button span {
+  flex: 1;
+  text-align: center;
+}
+
 .support-message {
   position: absolute;
   right: 0;
@@ -693,6 +722,10 @@ textarea:focus {
   }
 
   .support-actions .button {
+    width: 100%;
+  }
+
+  .support-actions .boba-button {
     width: 100%;
   }
 

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import {
+  bobaSponsorIconUrl,
+  bobaSponsorUrl,
   buyMeACoffeeUrl,
   githubSponsorsUrl,
   projectUrl,
@@ -9,8 +11,7 @@ import {
 
 export function SupportSection() {
   const [message, setMessage] = useState('');
-  const hasSupportLink = Boolean(buyMeACoffeeUrl || githubSponsorsUrl);
-  const supportUrl = buyMeACoffeeUrl || githubSponsorsUrl;
+  const supportUrl = bobaSponsorUrl || buyMeACoffeeUrl || githubSponsorsUrl;
 
   function showMessage(nextMessage: string) {
     setMessage(nextMessage);
@@ -45,9 +46,10 @@ export function SupportSection() {
         </p>
       </div>
       <div className="support-actions">
-        {hasSupportLink ? (
-          <a className="button primary" href={supportUrl} rel="noreferrer" target="_blank">
-            支持這個專案
+        {supportUrl ? (
+          <a className="boba-button" href={supportUrl} rel="noreferrer" target="_blank">
+            <img src={bobaSponsorIconUrl} alt="" aria-hidden="true" />
+            <span>Give me a Boba!</span>
           </a>
         ) : (
           <button className="button primary" type="button" disabled>

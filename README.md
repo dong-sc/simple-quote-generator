@@ -109,17 +109,17 @@ base: "/"
 
 如果這個工具對你有幫助，未來可以透過以下方式支持專案：
 
-- Buy Me a Coffee：placeholder
+- Give me a Boba：https://donglinphoto.bobaboba.me
 - GitHub Sponsors：placeholder
 
-### 設定 Buy Me a Coffee / GitHub Sponsors
+### 設定 Give me a Boba / GitHub Sponsors
 
 支持連結集中放在 `src/utils/projectLinks.ts`。
 
-建立 Buy Me a Coffee 或 GitHub Sponsors 後，將對應網址填入：
+建立 Give me a Boba 或 GitHub Sponsors 後，將對應網址填入：
 
 ```ts
-export const buyMeACoffeeUrl = "https://www.buymeacoffee.com/your-account";
+export const bobaSponsorUrl = "https://donglinphoto.bobaboba.me";
 export const githubSponsorsUrl = "https://github.com/sponsors/your-account";
 ```
 
