@@ -60,6 +60,7 @@ export function generateQuotePlainText(data: QuoteData, totals: Totals): string 
     '客戶',
     ...optionalLine('客戶名稱', data.clientName),
     ...optionalLine('客戶公司', data.clientCompany),
+    ...optionalLine('客戶統編', data.clientTaxId),
     ...optionalLine('客戶 Email', data.clientEmail),
     ...optionalLine('客戶電話', data.clientPhone),
     '',

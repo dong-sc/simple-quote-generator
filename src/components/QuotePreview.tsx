@@ -67,6 +67,7 @@ export function QuotePreview({ data, totals }: QuotePreviewProps) {
             <h3>客戶</h3>
             <strong>{data.clientName || '客戶名稱'}</strong>
             <DetailLine label="公司" value={data.clientCompany} />
+            <DetailLine label="統編" value={data.clientTaxId} />
             <DetailLine label="Email" value={data.clientEmail} />
             <DetailLine label="電話" value={data.clientPhone} />
           </div>

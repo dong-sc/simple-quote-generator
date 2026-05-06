@@ -30,6 +30,7 @@ export interface QuoteData {
   issuerWebsite: string;
   clientName: string;
   clientCompany: string;
+  clientTaxId: string;
   clientEmail: string;
   clientPhone: string;
   items: QuoteItem[];

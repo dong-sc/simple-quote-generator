@@ -30,6 +30,14 @@ export function ClientSection({ data, onChange }: ClientSectionProps) {
           />
         </label>
         <label>
+          客戶統編
+          <input
+            value={data.clientTaxId}
+            onChange={(event) => update('clientTaxId', event.target.value)}
+            placeholder="可留空"
+          />
+        </label>
+        <label>
           客戶 Email
           <input
             type="email"

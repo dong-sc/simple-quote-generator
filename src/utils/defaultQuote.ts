@@ -39,6 +39,7 @@ export function createDefaultQuoteData(): QuoteData {
     issuerWebsite: '',
     clientName: '',
     clientCompany: '',
+    clientTaxId: '',
     clientEmail: '',
     clientPhone: '',
     items: [createEmptyItem()],

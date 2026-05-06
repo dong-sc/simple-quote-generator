@@ -46,6 +46,12 @@
     page-break-inside: avoid;
   }
 
+  .preview-party-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 18mm;
+  }
+
   .preview-table {
     break-inside: auto;
     font-size: 10.5pt;

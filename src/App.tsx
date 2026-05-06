@@ -8,6 +8,13 @@ import { clearQuoteData, loadQuoteData, saveQuoteData } from './utils/storage';
 import { generateQuotePlainText } from './utils/quoteText';
 import type { QuoteData } from './types/quote';
 
+function getPrintableTitle(title: string): string {
+  const normalizedTitle = title.trim() || '報價單';
+  const safeTitle = normalizedTitle.replace(/[\\/:*?"<>|]/g, '-');
+
+  return `${safeTitle}_報價單`;
+}
+
 export default function App() {
   const [quoteData, setQuoteData] = useState<QuoteData>(() => loadQuoteData());
   const [copyMessage, setCopyMessage] = useState('');
@@ -29,6 +36,20 @@ export default function App() {
     window.setTimeout(() => setCopyMessage(''), 2200);
   }
 
+  function handlePrint() {
+    const originalTitle = document.title;
+    document.title = getPrintableTitle(quoteData.title);
+
+    const restoreTitle = () => {
+      document.title = originalTitle;
+      window.removeEventListener('afterprint', restoreTitle);
+    };
+
+    window.addEventListener('afterprint', restoreTitle);
+    window.print();
+    window.setTimeout(restoreTitle, 1000);
+  }
+
   return (
     <>
       <Header />
@@ -39,7 +60,7 @@ export default function App() {
               copyMessage={copyMessage}
               onClear={handleClear}
               onCopyText={handleCopyText}
-              onPrint={() => window.print()}
+              onPrint={handlePrint}
             />
             <QuoteForm data={quoteData} onChange={setQuoteData} totals={totals} />
           </div>
