@@ -180,6 +180,10 @@ export function QuotePreview({ data, totals }: QuotePreviewProps) {
           ) : null}
         </section>
 
+        <p className="print-next-page-notice" aria-hidden="true">
+          本報價單另有第二頁補充資訊，請一併查看。
+        </p>
+
         {hasSupplementalInfo ? (
           <section className="preview-supplements">
             <h3>補充資訊</h3>
@@ -196,7 +200,6 @@ export function QuotePreview({ data, totals }: QuotePreviewProps) {
             <MultilineBlock title="條款" value={data.terms} />
           </section>
         ) : null}
-        <div className="print-page-footer" aria-hidden="true" />
       </article>
     </aside>
   );

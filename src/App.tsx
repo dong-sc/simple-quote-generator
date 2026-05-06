@@ -15,17 +15,17 @@ function getPrintableTitle(title: string): string {
   return `${safeTitle}_報價單`;
 }
 
-function estimatePrintPageCount(): number {
+function detectSecondPrintPage(): boolean {
   const preview = document.querySelector<HTMLElement>('.quote-preview');
   if (!preview) {
-    return 1;
+    return false;
   }
 
   const measuringContainer = document.createElement('div');
   measuringContainer.className = 'print-measure-container';
 
   const clonedPreview = preview.cloneNode(true) as HTMLElement;
-  clonedPreview.querySelector('.print-page-footer')?.remove();
+  clonedPreview.querySelector('.print-next-page-notice')?.remove();
   measuringContainer.append(clonedPreview);
   document.body.append(measuringContainer);
 
@@ -33,13 +33,13 @@ function estimatePrintPageCount(): number {
   const measuredHeight = clonedPreview.scrollHeight;
   measuringContainer.remove();
 
-  return Math.max(1, Math.ceil(measuredHeight / printablePageHeightPx));
+  return measuredHeight > printablePageHeightPx;
 }
 
-function setPrintTotalPages(pageCount: number): void {
-  const footer = document.querySelector<HTMLElement>('.print-page-footer');
-  if (footer) {
-    footer.dataset.totalPages = String(pageCount);
+function setSecondPageNotice(hasSecondPage: boolean): void {
+  const notice = document.querySelector<HTMLElement>('.print-next-page-notice');
+  if (notice) {
+    notice.dataset.hasSecondPage = String(hasSecondPage);
   }
 }
 
@@ -66,14 +66,14 @@ export default function App() {
 
   function handlePrint() {
     const originalTitle = document.title;
-    const estimatedPageCount = estimatePrintPageCount();
+    const hasSecondPage = detectSecondPrintPage();
 
     document.title = getPrintableTitle(quoteData.title);
-    setPrintTotalPages(estimatedPageCount);
+    setSecondPageNotice(hasSecondPage);
 
     const restoreTitle = () => {
       document.title = originalTitle;
-      setPrintTotalPages(1);
+      setSecondPageNotice(false);
       window.removeEventListener('afterprint', restoreTitle);
     };
 
