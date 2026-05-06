@@ -37,6 +37,12 @@ function MultilineBlock({ title, value }: { title: string; value: string }) {
 export function QuotePreview({ data, totals }: QuotePreviewProps) {
   const validUntil = addDays(data.issueDate, data.validUntilDays);
   const taxLabel = data.taxRate > 0 ? `稅額（${data.taxRate}%）` : '稅額（未稅 / 免稅）';
+  const hasSupplementalInfo =
+    data.reimbursableExpenses.enabled ||
+    data.paymentTerms.trim() ||
+    data.deliveryNotes.trim() ||
+    data.notes.trim() ||
+    data.terms.trim();
 
   return (
     <aside className="preview-pane" aria-label="報價單預覽">
@@ -154,17 +160,23 @@ export function QuotePreview({ data, totals }: QuotePreviewProps) {
           ) : null}
         </section>
 
-        {data.reimbursableExpenses.enabled ? (
-          <section className="preview-block">
-            <h3>實報實銷</h3>
-            <p className="multiline">{data.reimbursableExpenses.description}</p>
+        {hasSupplementalInfo ? (
+          <section className="preview-supplements">
+            <h3>補充資訊</h3>
+            {data.reimbursableExpenses.enabled ? (
+              <section className="preview-block compact-block">
+                <h4>實報實銷</h4>
+                <p className="multiline">{data.reimbursableExpenses.description}</p>
+              </section>
+            ) : null}
+
+            <MultilineBlock title="付款方式" value={data.paymentTerms} />
+            <MultilineBlock title="交付說明" value={data.deliveryNotes} />
+            <MultilineBlock title="備註" value={data.notes} />
+            <MultilineBlock title="條款" value={data.terms} />
           </section>
         ) : null}
-
-        <MultilineBlock title="付款方式" value={data.paymentTerms} />
-        <MultilineBlock title="交付說明" value={data.deliveryNotes} />
-        <MultilineBlock title="備註" value={data.notes} />
-        <MultilineBlock title="條款" value={data.terms} />
+        <div className="print-page-footer" aria-hidden="true" />
       </article>
     </aside>
   );

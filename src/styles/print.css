@@ -1,12 +1,13 @@
 @page {
   size: A4;
-  margin: 14mm;
+  margin: 10mm 11mm 13mm;
 }
 
 @media print {
   :root,
   body {
     background: #ffffff;
+    font-size: 9.5pt;
   }
 
   .site-header,
@@ -36,25 +37,54 @@
     border-radius: 0;
     box-shadow: none;
     color: #222222;
+    overflow: visible;
   }
 
   .preview-header,
   .preview-party-grid,
-  .preview-block,
-  .preview-totals {
+  .preview-totals,
+  .preview-supplements {
     break-inside: avoid;
     page-break-inside: avoid;
+  }
+
+  .preview-header {
+    gap: 12mm;
+    padding-bottom: 5mm;
+    border-bottom-width: 1.5pt;
   }
 
   .preview-party-grid {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
-    gap: 18mm;
+    gap: 12mm;
+    margin-top: 6mm;
+  }
+
+  .preview-party p,
+  .preview-meta p {
+    margin-top: 2mm;
+  }
+
+  .preview-block {
+    margin-top: 6mm;
+  }
+
+  .preview-supplements {
+    margin-top: 6mm;
+    padding-top: 4mm;
+    border-top: 1px solid #d6d6d6;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .preview-supplements .preview-block {
+    margin-top: 3.5mm;
   }
 
   .preview-table {
     break-inside: auto;
-    font-size: 10.5pt;
+    font-size: 8.7pt;
   }
 
   .preview-table tr {
@@ -65,14 +95,65 @@
   .preview-table th,
   .preview-table td {
     border-color: #b8b8b8;
+    padding: 2.4mm 2mm;
   }
 
   .preview-header h2 {
-    font-size: 24pt;
+    font-size: 20pt;
   }
 
   .preview-party h3,
-  .preview-block h3 {
-    font-size: 11pt;
+  .preview-block h3,
+  .preview-block h4,
+  .preview-supplements > h3 {
+    font-size: 10pt;
+    margin-bottom: 2.5mm;
+  }
+
+  .preview-party strong {
+    margin-bottom: 2mm;
+    font-size: 10pt;
+  }
+
+  .preview-meta {
+    min-width: 44mm;
+    font-size: 8.8pt;
+  }
+
+  .preview-label {
+    margin-bottom: 2mm;
+    font-size: 7.5pt;
+  }
+
+  .preview-totals {
+    max-width: 76mm;
+    gap: 1.8mm;
+    margin-top: 4mm;
+    padding-top: 3mm;
+    font-size: 9pt;
+  }
+
+  .preview-total-main,
+  .preview-total-estimate {
+    margin-top: 1.5mm;
+    padding-top: 2.2mm;
+    font-size: 10pt;
+  }
+
+  .multiline {
+    line-height: 1.5;
+  }
+
+  .print-page-footer {
+    position: fixed;
+    right: 0;
+    bottom: -7mm;
+    display: block;
+    color: #666666;
+    font-size: 8pt;
+  }
+
+  .print-page-footer::after {
+    content: "第 " counter(page) " 頁 / 共 " counter(pages) " 頁";
   }
 }

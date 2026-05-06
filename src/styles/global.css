@@ -410,7 +410,14 @@ textarea:focus {
 }
 
 .preview-party h3,
-.preview-block h3 {
+.preview-block h3,
+.preview-supplements > h3 {
+  margin: 0 0 10px;
+  color: #20211f;
+  font-size: 1rem;
+}
+
+.preview-block h4 {
   margin: 0 0 10px;
   color: #20211f;
   font-size: 1rem;
@@ -424,6 +431,18 @@ textarea:focus {
 
 .preview-block {
   margin-top: 28px;
+}
+
+.preview-supplements {
+  margin-top: 28px;
+}
+
+.preview-supplements .preview-block {
+  margin-top: 18px;
+}
+
+.print-page-footer {
+  display: none;
 }
 
 .preview-table-wrap {
