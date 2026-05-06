@@ -21,6 +21,21 @@ function DetailLine({ label, value }: { label: string; value: string }) {
   );
 }
 
+function AlignedDetailLine({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <p className={value.trim() ? undefined : 'empty-detail'}>
+      <span>{label}</span>
+      {value.trim() || '\u00A0'}
+    </p>
+  );
+}
+
 function MultilineBlock({ title, value }: { title: string; value: string }) {
   if (!value.trim()) {
     return null;
@@ -63,19 +78,26 @@ export function QuotePreview({ data, totals }: QuotePreviewProps) {
           <div className="preview-party">
             <h3>報價方</h3>
             <strong>{data.issuerName || '公司 / 個人名稱'}</strong>
-            <DetailLine label="統編" value={data.issuerTaxId} />
-            <DetailLine label="Email" value={data.issuerEmail} />
-            <DetailLine label="電話" value={data.issuerPhone} />
-            <DetailLine label="地址" value={data.issuerAddress} />
-            <DetailLine label="網站" value={data.issuerWebsite} />
+            <AlignedDetailLine label="統編" value={data.issuerTaxId} />
+            <AlignedDetailLine label="Email" value={data.issuerEmail} />
+            <AlignedDetailLine label="電話" value={data.issuerPhone} />
+            <AlignedDetailLine label="地址" value={data.issuerAddress} />
+            <AlignedDetailLine label="網站" value={data.issuerWebsite} />
           </div>
           <div className="preview-party">
             <h3>客戶</h3>
             <strong>{data.clientName || '客戶名稱'}</strong>
-            <DetailLine label="公司" value={data.clientCompany} />
-            <DetailLine label="統編" value={data.clientTaxId} />
-            <DetailLine label="Email" value={data.clientEmail} />
-            <DetailLine label="電話" value={data.clientPhone} />
+            <AlignedDetailLine label="統編" value={data.clientTaxId} />
+            <AlignedDetailLine label="Email" value={data.clientEmail} />
+            <AlignedDetailLine label="電話" value={data.clientPhone} />
+            <AlignedDetailLine label="地址" value="" />
+            <AlignedDetailLine label="網站" value="" />
+            {data.clientCompany.trim() ? (
+              <p className="client-company-line">
+                <span>公司</span>
+                {data.clientCompany}
+              </p>
+            ) : null}
           </div>
         </section>
 

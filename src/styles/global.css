@@ -393,6 +393,14 @@ textarea:focus {
   margin: 6px 0 0;
 }
 
+.preview-party .empty-detail {
+  visibility: hidden;
+}
+
+.client-company-line {
+  color: #464a43;
+}
+
 .preview-meta span,
 .preview-party span {
   display: inline-block;
