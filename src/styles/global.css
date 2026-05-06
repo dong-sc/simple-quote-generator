@@ -397,10 +397,6 @@ textarea:focus {
   visibility: hidden;
 }
 
-.client-company-line {
-  color: #464a43;
-}
-
 .preview-meta span,
 .preview-party span {
   display: inline-block;

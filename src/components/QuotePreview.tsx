@@ -77,7 +77,9 @@ export function QuotePreview({ data, totals }: QuotePreviewProps) {
         <section className="preview-party-grid">
           <div className="preview-party">
             <h3>報價方</h3>
-            <strong>{data.issuerName || '公司 / 個人名稱'}</strong>
+            <strong>{data.issuerCompany || data.issuerName || '報價方'}</strong>
+            <AlignedDetailLine label="聯絡人" value={data.issuerName} />
+            <AlignedDetailLine label="公司名稱" value={data.issuerCompany} />
             <AlignedDetailLine label="統編" value={data.issuerTaxId} />
             <AlignedDetailLine label="Email" value={data.issuerEmail} />
             <AlignedDetailLine label="電話" value={data.issuerPhone} />
@@ -86,18 +88,14 @@ export function QuotePreview({ data, totals }: QuotePreviewProps) {
           </div>
           <div className="preview-party">
             <h3>客戶</h3>
-            <strong>{data.clientName || '客戶名稱'}</strong>
+            <strong>{data.clientCompany || data.clientName || '客戶'}</strong>
+            <AlignedDetailLine label="聯絡人" value={data.clientName} />
+            <AlignedDetailLine label="公司名稱" value={data.clientCompany} />
             <AlignedDetailLine label="統編" value={data.clientTaxId} />
             <AlignedDetailLine label="Email" value={data.clientEmail} />
             <AlignedDetailLine label="電話" value={data.clientPhone} />
-            <AlignedDetailLine label="地址" value="" />
-            <AlignedDetailLine label="網站" value="" />
-            {data.clientCompany.trim() ? (
-              <p className="client-company-line">
-                <span>公司</span>
-                {data.clientCompany}
-              </p>
-            ) : null}
+            <AlignedDetailLine label="地址" value={data.clientAddress} />
+            <AlignedDetailLine label="網站" value={data.clientWebsite} />
           </div>
         </section>
 

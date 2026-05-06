@@ -23,6 +23,7 @@ export interface QuoteData {
   validUntilDays: number;
   currency: Currency;
   issuerName: string;
+  issuerCompany: string;
   issuerTaxId: string;
   issuerEmail: string;
   issuerPhone: string;
@@ -33,6 +34,8 @@ export interface QuoteData {
   clientTaxId: string;
   clientEmail: string;
   clientPhone: string;
+  clientAddress: string;
+  clientWebsite: string;
   items: QuoteItem[];
   discountAmount: number;
   taxRate: number;

@@ -15,14 +15,23 @@ export function IssuerSection({ data, onChange }: IssuerSectionProps) {
       <h2>報價方資訊</h2>
       <div className="field-grid two-columns">
         <label>
-          公司 / 個人名稱
+          聯絡人 / 姓名
           <input
             value={data.issuerName}
             onChange={(event) => update('issuerName', event.target.value)}
+            placeholder="可留空"
           />
         </label>
         <label>
-          公司統編
+          公司名稱
+          <input
+            value={data.issuerCompany}
+            onChange={(event) => update('issuerCompany', event.target.value)}
+            placeholder="可留空"
+          />
+        </label>
+        <label>
+          統編
           <input
             value={data.issuerTaxId}
             onChange={(event) => update('issuerTaxId', event.target.value)}
