@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ActionBar } from './components/ActionBar';
+import { AuthorPromoSection } from './components/AuthorPromoSection';
 import { Header } from './components/Header';
 import { QuoteForm } from './components/QuoteForm';
 import { QuotePreview } from './components/QuotePreview';
@@ -100,6 +101,7 @@ export default function App() {
           <QuotePreview data={quoteData} totals={totals} />
         </section>
         <SupportSection />
+        <AuthorPromoSection />
       </main>
     </>
   );

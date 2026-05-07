@@ -25,6 +25,7 @@
   .form-pane,
   .action-bar,
   .support-section,
+  .author-promo-section,
   .tool-links-section,
   .header-tool-shortcuts {
     display: none !important;
