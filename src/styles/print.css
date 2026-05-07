@@ -10,10 +10,23 @@
     font-size: 9.5pt;
   }
 
+  body * {
+    visibility: hidden !important;
+  }
+
+  .preview-pane,
+  .preview-pane *,
+  .quote-preview,
+  .quote-preview * {
+    visibility: visible !important;
+  }
+
   .site-header,
   .form-pane,
   .action-bar,
-  .support-section {
+  .support-section,
+  .tool-links-section,
+  .header-tool-shortcuts {
     display: none !important;
   }
 
@@ -29,6 +42,7 @@
 
   .preview-pane {
     position: static;
+    display: block !important;
   }
 
   .quote-preview {
