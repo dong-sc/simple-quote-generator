@@ -44,6 +44,25 @@ function setSecondPageNotice(hasSecondPage: boolean): void {
   }
 }
 
+function ToolShortcuts() {
+  return (
+    <nav className="tool-shortcuts" aria-label="接案文件工具切換">
+      <p>其他小工具</p>
+      <div>
+        <a aria-current="page" href="https://dong-sc.github.io/simple-quote-generator/">
+          報價單
+        </a>
+        <a href="https://dong-sc.github.io/simple-payment-request-generator/">
+          請款單
+        </a>
+        <a href="https://dong-sc.github.io/simple-scope-confirmation-generator/">
+          範圍確認
+        </a>
+      </div>
+    </nav>
+  );
+}
+
 export default function App() {
   const [quoteData, setQuoteData] = useState<QuoteData>(() => loadQuoteData());
   const [copyMessage, setCopyMessage] = useState('');
@@ -87,6 +106,7 @@ export default function App() {
     <>
       <Header />
       <main className="app-shell">
+        <ToolShortcuts />
         <section className="workspace" aria-label="報價單製作工作區">
           <div className="form-pane">
             <ActionBar
