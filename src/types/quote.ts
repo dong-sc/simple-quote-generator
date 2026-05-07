@@ -1,26 +1,27 @@
 export type Currency = 'TWD' | 'USD' | 'JPY' | 'HKD' | 'CNY';
+export type NumericInputValue = number | '';
 
 export interface QuoteItem {
   id: string;
   name: string;
   description: string;
-  quantity: number;
+  quantity: NumericInputValue;
   unit: string;
-  unitPrice: number;
+  unitPrice: NumericInputValue;
 }
 
 export interface ReimbursableExpenses {
   enabled: boolean;
   description: string;
   hasEstimate: boolean;
-  estimatedAmount: number;
+  estimatedAmount: NumericInputValue;
 }
 
 export interface QuoteData {
   title: string;
   quoteNumber: string;
   issueDate: string;
-  validUntilDays: number;
+  validUntilDays: NumericInputValue;
   currency: Currency;
   issuerName: string;
   issuerCompany: string;
@@ -37,8 +38,8 @@ export interface QuoteData {
   clientAddress: string;
   clientWebsite: string;
   items: QuoteItem[];
-  discountAmount: number;
-  taxRate: number;
+  discountAmount: NumericInputValue;
+  taxRate: NumericInputValue;
   reimbursableExpenses: ReimbursableExpenses;
   paymentTerms: string;
   deliveryNotes: string;

@@ -1,6 +1,6 @@
 import type { QuoteData, QuoteItem } from '../types/quote';
 import { calculateItemSubtotal } from '../utils/calculation';
-import { clampNonNegative, formatCurrency } from '../utils/currency';
+import { formatCurrency, parseNumberInput } from '../utils/currency';
 import { createEmptyItem } from '../utils/defaultQuote';
 
 interface QuoteItemsEditorProps {
@@ -64,7 +64,7 @@ export function QuoteItemsEditor({ data, onChange }: QuoteItemsEditorProps) {
                   value={item.quantity}
                   onChange={(event) =>
                     updateItem(item.id, {
-                      quantity: clampNonNegative(event.target.value),
+                      quantity: parseNumberInput(event.target.value),
                     })
                   }
                 />
@@ -85,7 +85,7 @@ export function QuoteItemsEditor({ data, onChange }: QuoteItemsEditorProps) {
                   value={item.unitPrice}
                   onChange={(event) =>
                     updateItem(item.id, {
-                      unitPrice: clampNonNegative(event.target.value),
+                      unitPrice: parseNumberInput(event.target.value),
                     })
                   }
                 />

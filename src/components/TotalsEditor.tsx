@@ -1,6 +1,6 @@
 import { TotalsSummary } from './TotalsSummary';
 import type { QuoteData, Totals } from '../types/quote';
-import { clampNonNegative } from '../utils/currency';
+import { parseNumberInput } from '../utils/currency';
 
 interface TotalsEditorProps {
   data: QuoteData;
@@ -22,7 +22,7 @@ export function TotalsEditor({ data, onChange, totals }: TotalsEditorProps) {
             onChange={(event) =>
               onChange({
                 ...data,
-                discountAmount: clampNonNegative(event.target.value),
+                discountAmount: parseNumberInput(event.target.value),
               })
             }
           />
@@ -34,7 +34,7 @@ export function TotalsEditor({ data, onChange, totals }: TotalsEditorProps) {
             type="number"
             value={data.taxRate}
             onChange={(event) =>
-              onChange({ ...data, taxRate: clampNonNegative(event.target.value) })
+              onChange({ ...data, taxRate: parseNumberInput(event.target.value) })
             }
           />
         </label>

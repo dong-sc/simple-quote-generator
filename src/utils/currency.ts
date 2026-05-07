@@ -30,7 +30,15 @@ export function clampNonNegative(value: unknown): number {
   return Math.max(0, parseSafeNumber(value));
 }
 
-export function formatCurrency(amount: number, currency: Currency): string {
+export function parseNumberInput(value: string): number | '' {
+  if (value.trim() === '') {
+    return '';
+  }
+
+  return clampNonNegative(value);
+}
+
+export function formatCurrency(amount: unknown, currency: Currency): string {
   const safeAmount = clampNonNegative(amount);
   const roundedAmount = Math.round(safeAmount);
   const formattedAmount = roundedAmount.toLocaleString('en-US');

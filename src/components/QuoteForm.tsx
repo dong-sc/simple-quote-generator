@@ -5,7 +5,7 @@ import { ReimbursableExpensesEditor } from './ReimbursableExpensesEditor';
 import { TermsEditor } from './TermsEditor';
 import { TotalsEditor } from './TotalsEditor';
 import type { Currency, QuoteData, Totals } from '../types/quote';
-import { clampNonNegative } from '../utils/currency';
+import { parseNumberInput } from '../utils/currency';
 
 interface QuoteFormProps {
   data: QuoteData;
@@ -55,7 +55,7 @@ export function QuoteForm({ data, onChange, totals }: QuoteFormProps) {
               min="0"
               value={data.validUntilDays}
               onChange={(event) =>
-                update('validUntilDays', clampNonNegative(event.target.value))
+                update('validUntilDays', parseNumberInput(event.target.value))
               }
             />
           </label>

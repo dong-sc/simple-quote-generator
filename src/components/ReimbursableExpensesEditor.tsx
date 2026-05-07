@@ -1,5 +1,5 @@
 import type { QuoteData, Totals } from '../types/quote';
-import { clampNonNegative, formatCurrency } from '../utils/currency';
+import { formatCurrency, parseNumberInput } from '../utils/currency';
 
 interface ReimbursableExpensesEditorProps {
   data: QuoteData;
@@ -63,7 +63,7 @@ export function ReimbursableExpensesEditor({
                 value={expenses.estimatedAmount}
                 onChange={(event) =>
                   updateExpenses({
-                    estimatedAmount: clampNonNegative(event.target.value),
+                    estimatedAmount: parseNumberInput(event.target.value),
                   })
                 }
               />

@@ -1,7 +1,7 @@
 import type { QuoteData, Totals } from '../types/quote';
 import { addDays } from './date';
 import { calculateItemSubtotal } from './calculation';
-import { formatCurrency } from './currency';
+import { clampNonNegative, formatCurrency } from './currency';
 
 function optionalLine(label: string, value: string): string[] {
   return value.trim() ? [`${label}：${value.trim()}`] : [];
@@ -9,8 +9,8 @@ function optionalLine(label: string, value: string): string[] {
 
 export function generateQuotePlainText(data: QuoteData, totals: Totals): string {
   const validUntil = addDays(data.issueDate, data.validUntilDays);
-  const taxLabel =
-    data.taxRate > 0 ? `稅額（${data.taxRate}%）` : '稅額（未稅 / 免稅）';
+  const taxRate = clampNonNegative(data.taxRate);
+  const taxLabel = taxRate > 0 ? `稅額（${taxRate}%）` : '稅額（未稅 / 免稅）';
   const itemLines = data.items.map((item, index) => {
     const name = item.name.trim() || `品項 ${index + 1}`;
     const description = item.description.trim()

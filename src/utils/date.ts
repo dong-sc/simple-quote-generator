@@ -7,9 +7,10 @@ export function getTodayString(): string {
   return `${year}-${month}-${day}`;
 }
 
-export function addDays(dateString: string, days: number): string {
+export function addDays(dateString: string, days: unknown): string {
   const date = new Date(`${dateString}T00:00:00`);
-  const safeDays = Number.isFinite(days) ? days : 0;
+  const parsedDays = Number(days);
+  const safeDays = Number.isFinite(parsedDays) ? parsedDays : 0;
 
   if (Number.isNaN(date.getTime())) {
     return '';

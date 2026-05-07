@@ -1,6 +1,6 @@
 import type { QuoteData, Totals } from '../types/quote';
 import { calculateItemSubtotal } from '../utils/calculation';
-import { formatCurrency } from '../utils/currency';
+import { clampNonNegative, formatCurrency } from '../utils/currency';
 import { addDays } from '../utils/date';
 
 interface QuotePreviewProps {
@@ -51,7 +51,8 @@ function MultilineBlock({ title, value }: { title: string; value: string }) {
 
 export function QuotePreview({ data, totals }: QuotePreviewProps) {
   const validUntil = addDays(data.issueDate, data.validUntilDays);
-  const taxLabel = data.taxRate > 0 ? `稅額（${data.taxRate}%）` : '稅額（未稅 / 免稅）';
+  const taxRate = clampNonNegative(data.taxRate);
+  const taxLabel = taxRate > 0 ? `稅額（${taxRate}%）` : '稅額（未稅 / 免稅）';
   const hasSupplementalInfo =
     data.reimbursableExpenses.enabled ||
     data.paymentTerms.trim() ||
