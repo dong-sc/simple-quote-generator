@@ -44,6 +44,7 @@ export interface QuoteData {
   deliveryNotes: string;
   notes: string;
   terms: string;
+  issuerSignatureImage: string;
 }
 
 export interface Totals {

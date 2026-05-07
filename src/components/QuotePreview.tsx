@@ -200,6 +200,23 @@ export function QuotePreview({ data, totals }: QuotePreviewProps) {
             <MultilineBlock title="條款" value={data.terms} />
           </section>
         ) : null}
+
+        <section className="preview-signatures" aria-label="簽名欄位">
+          <div className="preview-signature-card">
+            <h3>報價方簽名</h3>
+            <div className="preview-signature-box">
+              {data.issuerSignatureImage ? (
+                <img src={data.issuerSignatureImage} alt="報價方簽名" />
+              ) : null}
+            </div>
+            <p>{data.issuerName || data.issuerCompany || '報價方'}</p>
+          </div>
+          <div className="preview-signature-card">
+            <h3>客戶簽名</h3>
+            <div className="preview-signature-box" />
+            <p>{data.clientName || data.clientCompany || '客戶'}</p>
+          </div>
+        </section>
       </article>
     </aside>
   );

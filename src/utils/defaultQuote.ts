@@ -58,5 +58,6 @@ export function createDefaultQuoteData(): QuoteData {
     deliveryNotes: '',
     notes: '',
     terms: '',
+    issuerSignatureImage: '',
   };
 }
