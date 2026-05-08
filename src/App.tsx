@@ -6,6 +6,7 @@ import { QuoteForm } from './components/QuoteForm';
 import { QuotePreview } from './components/QuotePreview';
 import { SupportSection } from './components/SupportSection';
 import { calculateTotals } from './utils/calculation';
+import { exportQuoteExcel } from './utils/exportQuoteExcel';
 import { clearQuoteData, loadQuoteData, saveQuoteData } from './utils/storage';
 import { generateQuotePlainText } from './utils/quoteText';
 import type { QuoteData } from './types/quote';
@@ -66,6 +67,17 @@ export default function App() {
     window.setTimeout(() => setCopyMessage(''), 2200);
   }
 
+  async function handleExportExcel() {
+    try {
+      await exportQuoteExcel(quoteData, totals);
+      setCopyMessage('已匯出 Excel 資料表');
+      window.setTimeout(() => setCopyMessage(''), 2200);
+    } catch {
+      setCopyMessage('匯出 Excel 失敗，請稍後再試');
+      window.setTimeout(() => setCopyMessage(''), 2200);
+    }
+  }
+
   function handlePrint() {
     const originalTitle = document.title;
     const hasSecondPage = detectSecondPrintPage();
@@ -94,6 +106,7 @@ export default function App() {
               copyMessage={copyMessage}
               onClear={handleClear}
               onCopyText={handleCopyText}
+              onExportExcel={handleExportExcel}
               onPrint={handlePrint}
             />
             <QuoteForm data={quoteData} onChange={setQuoteData} totals={totals} />
