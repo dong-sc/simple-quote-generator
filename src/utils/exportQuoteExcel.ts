@@ -47,7 +47,18 @@ function pushSectionTitle(
     rows.push([]);
   }
 
-  pushMergedRow(rows, merges, [title], 6);
+  pushMergedRow(rows, merges, [title], 7);
+}
+
+function pushWideRow(
+  rows: CellValue[][],
+  merges: MergeRange[],
+  label: string,
+  value: CellValue,
+): void {
+  const rowIndex = rows.length;
+  rows.push([label, value, '', '', '', '', '', '']);
+  merges.push({ s: { r: rowIndex, c: 1 }, e: { r: rowIndex, c: 7 } });
 }
 
 function pushPartyInfo(
@@ -57,15 +68,15 @@ function pushPartyInfo(
   rightRows: CellValue[][],
 ): void {
   const headingRowIndex = rows.length;
-  rows.push(['報價方資訊', '', '', '客戶資訊', '', '', '']);
-  merges.push({ s: { r: headingRowIndex, c: 0 }, e: { r: headingRowIndex, c: 2 } });
-  merges.push({ s: { r: headingRowIndex, c: 3 }, e: { r: headingRowIndex, c: 6 } });
+  rows.push(['報價方資訊', '', '', '', '客戶資訊', '', '', '']);
+  merges.push({ s: { r: headingRowIndex, c: 0 }, e: { r: headingRowIndex, c: 3 } });
+  merges.push({ s: { r: headingRowIndex, c: 4 }, e: { r: headingRowIndex, c: 7 } });
 
   const rowCount = Math.max(leftRows.length, rightRows.length);
   for (let index = 0; index < rowCount; index += 1) {
     const leftRow = leftRows[index] ?? ['', ''];
     const rightRow = rightRows[index] ?? ['', ''];
-    rows.push([leftRow[0], leftRow[1], '', rightRow[0], rightRow[1], '', '']);
+    rows.push([leftRow[0], leftRow[1], '', '', rightRow[0], rightRow[1], '', '']);
   }
 }
 
@@ -88,15 +99,31 @@ export async function exportQuoteExcel(
   const rows: CellValue[][] = [];
   const merges: MergeRange[] = [];
 
-  pushMergedRow(rows, merges, [cleanText(data.title) || '報價單'], 6);
-  rows.push(['匯出類型', 'Excel 資料表', '', '匯出日期', new Date().toISOString().slice(0, 10)]);
+  pushMergedRow(rows, merges, [cleanText(data.title) || '報價單'], 7);
+  rows.push([
+    '文件類型',
+    '報價單',
+    '',
+    '報價單編號',
+    cleanText(data.quoteNumber),
+    '報價日期',
+    cleanText(data.issueDate),
+    '',
+  ]);
+  rows.push([
+    '幣別',
+    data.currency,
+    '',
+    '有效至',
+    validUntil,
+    '匯出日期',
+    new Date().toISOString().slice(0, 10),
+    '',
+  ]);
   pushSectionTitle(rows, merges, '報價資訊');
   rows.push(
-    ['報價單標題', cleanText(data.title)],
-    ['報價單編號', cleanText(data.quoteNumber)],
-    ['報價日期', cleanText(data.issueDate)],
-    ['有效期限', `${data.validUntilDays || 0} 天（至 ${validUntil}）`],
-    ['幣別', data.currency],
+    ['報價單標題', cleanText(data.title), '', '', '有效期限', `${data.validUntilDays || 0} 天`, '', ''],
+    ['報價單編號', cleanText(data.quoteNumber), '', '', '幣別', data.currency, '', ''],
   );
   rows.push([]);
   pushPartyInfo(
@@ -124,7 +151,7 @@ export async function exportQuoteExcel(
 
   pushSectionTitle(rows, merges, '報價項目');
   rows.push(
-    ['序號', '品項名稱', '說明', '數量', '單位', '單價', '小計'],
+    ['序號', '品項名稱', '說明', '數量', '單位', '單價', '小計', '備註'],
     ...data.items.map((item, index) => [
       index + 1,
       cleanText(item.name),
@@ -133,60 +160,78 @@ export async function exportQuoteExcel(
       cleanText(item.unit),
       formatCurrency(item.unitPrice, data.currency),
       formatCurrency(calculateItemSubtotal(item), data.currency),
+      '',
     ]),
   );
 
   pushSectionTitle(rows, merges, '金額摘要');
   rows.push(
-    ['欄位', '金額 / 內容'],
-    ['服務費小計', formatCurrency(totals.serviceSubtotal, data.currency)],
-    ['折扣', formatCurrency(totals.discountAmount, data.currency)],
+    ['', '', '', '', '欄位', '', '金額 / 內容', ''],
+    ['', '', '', '', '服務費小計', '', formatCurrency(totals.serviceSubtotal, data.currency), ''],
+    ['', '', '', '', '折扣', '', formatCurrency(totals.discountAmount, data.currency), ''],
     [
+      '',
+      '',
+      '',
+      '',
       '折扣後金額',
+      '',
       formatCurrency(
         Math.max(0, totals.serviceSubtotal - totals.discountAmount),
         data.currency,
       ),
+      '',
     ],
-    ['稅率', `${taxRate}%`],
-    ['稅額', formatCurrency(totals.taxAmount, data.currency)],
-    ['本次報價小計', formatCurrency(totals.quoteSubtotal, data.currency)],
-    ['實報實銷狀態', reimbursableEnabled ? '啟用' : '未啟用'],
-    ...(reimbursableEnabled ? [['實報實銷處理方式', reimbursableTreatment]] : []),
+    ['', '', '', '', '稅率', '', `${taxRate}%`, ''],
+    ['', '', '', '', '稅額', '', formatCurrency(totals.taxAmount, data.currency), ''],
+    ['', '', '', '', '本次報價小計', '', formatCurrency(totals.quoteSubtotal, data.currency), ''],
+    ['', '', '', '', '實報實銷狀態', '', reimbursableEnabled ? '啟用' : '未啟用', ''],
+    ...(reimbursableEnabled
+      ? [['', '', '', '', '實報實銷處理方式', '', reimbursableTreatment, '']]
+      : []),
     ...(hasReimbursableEstimate
       ? [
           [
+            '',
+            '',
+            '',
+            '',
             '實報實銷預估',
+            '',
             formatCurrency(totals.reimbursableEstimate, data.currency),
+            '',
           ],
         ]
       : []),
     ...(totals.estimatedTotal !== null
-      ? [['預估總額', formatCurrency(totals.estimatedTotal, data.currency)]]
+      ? [['', '', '', '', '預估總額', '', formatCurrency(totals.estimatedTotal, data.currency), '']]
       : []),
   );
 
   pushSectionTitle(rows, merges, '備註與條款');
-  rows.push(
-    ['欄位', '內容'],
-    ['付款方式', cleanText(data.paymentTerms)],
-    ['交付說明', cleanText(data.deliveryNotes)],
-    ['備註', cleanText(data.notes)],
-    ['條款', cleanText(data.terms)],
-    ...(reimbursableEnabled
-      ? [['實報實銷說明', cleanText(data.reimbursableExpenses.description)]]
-      : []),
-  );
+  pushWideRow(rows, merges, '付款方式', cleanText(data.paymentTerms));
+  pushWideRow(rows, merges, '交付說明', cleanText(data.deliveryNotes));
+  pushWideRow(rows, merges, '備註', cleanText(data.notes));
+  pushWideRow(rows, merges, '條款', cleanText(data.terms));
+  if (reimbursableEnabled) {
+    pushWideRow(
+      rows,
+      merges,
+      '實報實銷說明',
+      cleanText(data.reimbursableExpenses.description),
+    );
+  }
 
   const worksheet = XLSX.utils.aoa_to_sheet(rows);
   worksheet['!cols'] = [
-    { wch: 18 },
-    { wch: 28 },
-    { wch: 4 },
-    { wch: 18 },
-    { wch: 28 },
+    { wch: 14 },
+    { wch: 24 },
+    { wch: 30 },
+    { wch: 10 },
+    { wch: 12 },
     { wch: 16 },
     { wch: 18 },
+    { wch: 12 },
   ];
   worksheet['!merges'] = merges;
   XLSX.utils.book_append_sheet(workbook, worksheet, '報價單資料');
