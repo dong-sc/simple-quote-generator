@@ -412,6 +412,36 @@ textarea:focus {
   min-height: 18px;
 }
 
+.radio-fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 12px;
+  border: 1px solid #e1e1d9;
+  border-radius: 8px;
+  background: #fbfbf8;
+}
+
+.radio-fieldset legend {
+  padding: 0 4px;
+  color: #464a43;
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.radio-field {
+  flex-direction: row;
+  align-items: center;
+  gap: 9px;
+  font-weight: 700;
+}
+
+.radio-field input {
+  width: 18px;
+  min-height: 18px;
+}
+
 .items-editor {
   display: flex;
   flex-direction: column;

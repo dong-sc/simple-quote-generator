@@ -53,6 +53,7 @@ export function createDefaultQuoteData(): QuoteData {
       description: defaultReimbursableDescription,
       hasEstimate: false,
       estimatedAmount: 0,
+      taxTreatment: 'separate',
     },
     paymentTerms: '',
     deliveryNotes: '',

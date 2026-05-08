@@ -14,15 +14,24 @@ export function calculateTotals(data: QuoteData): Totals {
     0,
   );
   const discountAmount = clampNonNegative(data.discountAmount);
-  const taxableAmount = Math.max(0, serviceSubtotal - discountAmount);
-  const taxRate = clampNonNegative(data.taxRate);
-  const taxAmount = taxableAmount * (taxRate / 100);
-  const quoteSubtotal = taxableAmount + taxAmount;
   const reimbursableEstimate = data.reimbursableExpenses.hasEstimate
     ? clampNonNegative(parseSafeNumber(data.reimbursableExpenses.estimatedAmount))
     : 0;
+  const shouldIncludeReimbursableInTax =
+    data.reimbursableExpenses.enabled &&
+    data.reimbursableExpenses.hasEstimate &&
+    data.reimbursableExpenses.taxTreatment === 'included';
+  const discountedServiceAmount = Math.max(0, serviceSubtotal - discountAmount);
+  const taxableAmount =
+    discountedServiceAmount +
+    (shouldIncludeReimbursableInTax ? reimbursableEstimate : 0);
+  const taxRate = clampNonNegative(data.taxRate);
+  const taxAmount = taxableAmount * (taxRate / 100);
+  const quoteSubtotal = taxableAmount + taxAmount;
   const estimatedTotal =
-    data.reimbursableExpenses.enabled && data.reimbursableExpenses.hasEstimate
+    data.reimbursableExpenses.enabled &&
+    data.reimbursableExpenses.hasEstimate &&
+    data.reimbursableExpenses.taxTreatment !== 'included'
       ? quoteSubtotal + reimbursableEstimate
       : null;
 

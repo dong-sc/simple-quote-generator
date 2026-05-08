@@ -1,5 +1,6 @@
 export type Currency = 'TWD' | 'USD' | 'JPY' | 'HKD' | 'CNY';
 export type NumericInputValue = number | '';
+export type ReimbursableTaxTreatment = 'separate' | 'included';
 
 export interface QuoteItem {
   id: string;
@@ -15,6 +16,7 @@ export interface ReimbursableExpenses {
   description: string;
   hasEstimate: boolean;
   estimatedAmount: NumericInputValue;
+  taxTreatment: ReimbursableTaxTreatment;
 }
 
 export interface QuoteData {

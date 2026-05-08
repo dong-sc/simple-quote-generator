@@ -11,6 +11,10 @@ export function generateQuotePlainText(data: QuoteData, totals: Totals): string 
   const validUntil = addDays(data.issueDate, data.validUntilDays);
   const taxRate = clampNonNegative(data.taxRate);
   const taxLabel = taxRate > 0 ? `稅額（${taxRate}%）` : '稅額（未稅 / 免稅）';
+  const reimbursableTaxTreatmentLabel =
+    data.reimbursableExpenses.taxTreatment === 'included'
+      ? '併入報價金額計算稅額'
+      : '另列，不納入本次服務費稅額計算';
   const itemLines = data.items.map((item, index) => {
     const name = item.name.trim() || `品項 ${index + 1}`;
     const description = item.description.trim()
@@ -27,11 +31,17 @@ export function generateQuotePlainText(data: QuoteData, totals: Totals): string 
     ? [
         '',
         '實報實銷',
+        `處理方式：${reimbursableTaxTreatmentLabel}`,
         data.reimbursableExpenses.hasEstimate
-          ? `實報實銷預估：${formatCurrency(
-              totals.reimbursableEstimate,
-              data.currency,
-            )}`
+          ? data.reimbursableExpenses.taxTreatment === 'included'
+            ? `實報實銷預估：${formatCurrency(
+                totals.reimbursableEstimate,
+                data.currency,
+              )}（已併入本次報價小計計算稅額）`
+            : `實報實銷預估：${formatCurrency(
+                totals.reimbursableEstimate,
+                data.currency,
+              )}`
           : '實報實銷：另計，依實際支出憑證請款',
         ...(totals.estimatedTotal !== null
           ? [
@@ -75,6 +85,16 @@ export function generateQuotePlainText(data: QuoteData, totals: Totals): string 
     '',
     `服務費小計：${formatCurrency(totals.serviceSubtotal, data.currency)}`,
     `折扣：${formatCurrency(totals.discountAmount, data.currency)}`,
+    ...(data.reimbursableExpenses.enabled &&
+    data.reimbursableExpenses.hasEstimate &&
+    data.reimbursableExpenses.taxTreatment === 'included'
+      ? [
+          `實報實銷預估：${formatCurrency(
+            totals.reimbursableEstimate,
+            data.currency,
+          )}`,
+        ]
+      : []),
     `${taxLabel}：${formatCurrency(totals.taxAmount, data.currency)}`,
     `本次報價小計：${formatCurrency(totals.quoteSubtotal, data.currency)}`,
     ...reimbursableLines,

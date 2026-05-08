@@ -53,6 +53,10 @@ export function QuotePreview({ data, totals }: QuotePreviewProps) {
   const validUntil = addDays(data.issueDate, data.validUntilDays);
   const taxRate = clampNonNegative(data.taxRate);
   const taxLabel = taxRate > 0 ? `稅額（${taxRate}%）` : '稅額（未稅 / 免稅）';
+  const shouldIncludeReimbursableInTax =
+    data.reimbursableExpenses.enabled &&
+    data.reimbursableExpenses.hasEstimate &&
+    data.reimbursableExpenses.taxTreatment === 'included';
   const hasSupplementalInfo =
     data.reimbursableExpenses.enabled ||
     data.paymentTerms.trim() ||
@@ -143,6 +147,14 @@ export function QuotePreview({ data, totals }: QuotePreviewProps) {
             <span>折扣</span>
             <strong>{formatCurrency(totals.discountAmount, data.currency)}</strong>
           </div>
+          {shouldIncludeReimbursableInTax ? (
+            <div>
+              <span>實報實銷預估</span>
+              <strong>
+                {formatCurrency(totals.reimbursableEstimate, data.currency)}
+              </strong>
+            </div>
+          ) : null}
           <div>
             <span>{taxLabel}</span>
             <strong>{formatCurrency(totals.taxAmount, data.currency)}</strong>
@@ -154,13 +166,19 @@ export function QuotePreview({ data, totals }: QuotePreviewProps) {
           {data.reimbursableExpenses.enabled ? (
             <>
               {data.reimbursableExpenses.hasEstimate ? (
-                <>
+                data.reimbursableExpenses.taxTreatment === 'included' ? (
                   <div>
-                    <span>實報實銷預估</span>
-                    <strong>
-                      {formatCurrency(totals.reimbursableEstimate, data.currency)}
-                    </strong>
+                    <span>實報實銷處理方式</span>
+                    <strong>併入報價金額計算稅額</strong>
                   </div>
+                ) : (
+                  <>
+                    <div>
+                      <span>實報實銷預估</span>
+                      <strong>
+                        {formatCurrency(totals.reimbursableEstimate, data.currency)}
+                      </strong>
+                    </div>
                   <div className="preview-total-estimate">
                     <span>預估總額</span>
                     <strong>
@@ -170,7 +188,8 @@ export function QuotePreview({ data, totals }: QuotePreviewProps) {
                       )}
                     </strong>
                   </div>
-                </>
+                  </>
+                )
               ) : (
                 <div>
                   <span>實報實銷</span>
@@ -192,6 +211,12 @@ export function QuotePreview({ data, totals }: QuotePreviewProps) {
               <section className="preview-block compact-block">
                 <h4>實報實銷</h4>
                 <p className="multiline">{data.reimbursableExpenses.description}</p>
+                <p className="multiline">
+                  處理方式：
+                  {data.reimbursableExpenses.taxTreatment === 'included'
+                    ? '併入報價金額計算稅額'
+                    : '另列，不納入本次服務費稅額計算'}
+                </p>
               </section>
             ) : null}
 

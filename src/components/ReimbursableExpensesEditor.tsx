@@ -44,6 +44,27 @@ export function ReimbursableExpensesEditor({
               onChange={(event) => updateExpenses({ description: event.target.value })}
             />
           </label>
+          <fieldset className="radio-fieldset">
+            <legend>實報實銷處理方式</legend>
+            <label className="radio-field">
+              <input
+                type="radio"
+                name="reimbursable-tax-treatment"
+                checked={expenses.taxTreatment === 'separate'}
+                onChange={() => updateExpenses({ taxTreatment: 'separate' })}
+              />
+              另列，不納入本次服務費稅額計算
+            </label>
+            <label className="radio-field">
+              <input
+                type="radio"
+                name="reimbursable-tax-treatment"
+                checked={expenses.taxTreatment === 'included'}
+                onChange={() => updateExpenses({ taxTreatment: 'included' })}
+              />
+              併入報價金額計算稅額
+            </label>
+          </fieldset>
           <label className="checkbox-field">
             <input
               type="checkbox"
@@ -71,11 +92,18 @@ export function ReimbursableExpensesEditor({
           ) : null}
           <div className="reimbursable-hint">
             {expenses.hasEstimate ? (
-              <>
-                實報實銷預估：
-                {formatCurrency(totals.reimbursableEstimate, data.currency)}，預估總額：
-                {formatCurrency(totals.estimatedTotal ?? totals.quoteSubtotal, data.currency)}
-              </>
+              expenses.taxTreatment === 'included' ? (
+                <>
+                  實報實銷預估：
+                  {formatCurrency(totals.reimbursableEstimate, data.currency)}，將併入本次報價小計並計算稅額。
+                </>
+              ) : (
+                <>
+                  實報實銷預估：
+                  {formatCurrency(totals.reimbursableEstimate, data.currency)}，預估總額：
+                  {formatCurrency(totals.estimatedTotal ?? totals.quoteSubtotal, data.currency)}
+                </>
+              )
             ) : (
               '實報實銷會顯示為另計，依實際支出憑證請款。'
             )}
