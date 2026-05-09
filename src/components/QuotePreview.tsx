@@ -244,7 +244,7 @@ export function QuotePreview({ data, totals }: QuotePreviewProps) {
             </div>
           </div>
           <div className="preview-signature-card">
-            <h3>客戶簽名</h3>
+            <h3>客戶簽名簽章</h3>
             <div className="preview-signature-box" />
           </div>
         </section>
