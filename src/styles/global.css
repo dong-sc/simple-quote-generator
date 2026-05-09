@@ -60,6 +60,14 @@ button {
   line-height: 1.7;
 }
 
+.desktop-hint {
+  max-width: 760px;
+  margin: 8px 0 0;
+  color: #6a6f66;
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
 .privacy-note {
   align-self: flex-end;
   max-width: 300px;
@@ -538,11 +546,11 @@ textarea:focus {
 .grand-row,
 .preview-total-main,
 .preview-total-estimate {
-  margin-top: 6px;
-  padding-top: 10px;
+  margin-top: 1.5mm;
+  padding-top: 2.2mm;
   border-top: 1px solid #c4c8ba;
   color: #20211f;
-  font-size: 1.1rem;
+  font-size: 10pt;
 }
 
 .reimbursable-hint {
@@ -644,26 +652,32 @@ textarea:focus {
 
 .quote-preview {
   overflow: hidden;
-  padding: 42px;
-  border: 1px solid #d9d9d2;
-  border-radius: 8px;
+  width: 100%;
+  max-width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  padding: 10mm 11mm 13mm;
+  border: 1px solid #e0e0d8;
+  border-radius: 2px;
   background: #ffffff;
-  box-shadow: 0 18px 50px rgba(36, 38, 32, 0.08);
+  box-shadow: 0 10px 30px rgba(36, 38, 32, 0.07);
+  color: #222222;
+  font-size: 9.5pt;
 }
 
 .preview-header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 24px;
-  padding-bottom: 18px;
-  border-bottom: 2px solid #252525;
+  gap: 12mm;
+  padding-bottom: 4mm;
+  border-bottom: 1.5pt solid #252525;
 }
 
 .preview-label {
-  margin: 0 0 8px;
+  margin: 0 0 2mm;
   color: #70746c;
-  font-size: 0.78rem;
+  font-size: 7.5pt;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -672,7 +686,7 @@ textarea:focus {
 .preview-header h2 {
   margin: 0;
   color: #20211f;
-  font-size: 2.15rem;
+  font-size: 20pt;
   line-height: 1.15;
 }
 
@@ -680,19 +694,19 @@ textarea:focus {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 8px;
+  gap: 2mm;
 }
 
 .preview-meta {
-  min-width: 180px;
+  min-width: 44mm;
   color: #464a43;
-  font-size: 0.95rem;
+  font-size: 8.8pt;
   text-align: right;
 }
 
 .preview-meta p,
 .preview-party p {
-  margin: 6px 0 0;
+  margin: 2mm 0 0;
 }
 
 .preview-party .empty-detail {
@@ -711,8 +725,8 @@ textarea:focus {
 .preview-party-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 28px;
-  margin-top: 28px;
+  gap: 12mm;
+  margin-top: 6mm;
 }
 
 .preview-party h3,
@@ -720,7 +734,7 @@ textarea:focus {
 .preview-supplements > h3 {
   margin: 0 0 10px;
   color: #20211f;
-  font-size: 1rem;
+  font-size: 10pt;
 }
 
 .preview-block h4 {
@@ -731,16 +745,16 @@ textarea:focus {
 
 .preview-party strong {
   display: block;
-  margin-bottom: 8px;
-  font-size: 1.04rem;
+  margin-bottom: 2mm;
+  font-size: 10pt;
 }
 
 .preview-logo-box {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  width: 160px;
-  height: 56px;
+  width: 32mm;
+  height: 12mm;
   overflow: hidden;
 }
 
@@ -752,38 +766,38 @@ textarea:focus {
 }
 
 .preview-block {
-  margin-top: 28px;
+  margin-top: 6mm;
 }
 
 .preview-supplements {
-  margin-top: 28px;
+  margin-top: 6mm;
 }
 
 .preview-supplements .preview-block {
-  margin-top: 18px;
+  margin-top: 3.5mm;
 }
 
 .preview-signatures {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 28px;
-  margin-top: 32px;
-  padding-top: 22px;
+  gap: 12mm;
+  margin-top: 7mm;
+  padding-top: 5mm;
   border-top: 1px solid #deded6;
   break-inside: avoid;
 }
 
 .preview-signature-card h3 {
-  margin: 0 0 10px;
+  margin: 0 0 2.5mm;
   color: #20211f;
-  font-size: 1rem;
+  font-size: 10pt;
 }
 
 .preview-signature-box {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 112px;
+  height: 22mm;
   overflow: hidden;
   border: 1px solid #c9cbc2;
   background: #ffffff;
@@ -953,12 +967,12 @@ textarea:focus {
 .preview-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.92rem;
+  font-size: 8.7pt;
 }
 
 .preview-table th,
 .preview-table td {
-  padding: 10px 8px;
+  padding: 2.4mm 2mm;
   border-bottom: 1px solid #e3e3dc;
   text-align: left;
   vertical-align: top;
@@ -977,7 +991,11 @@ textarea:focus {
 }
 
 .preview-totals {
-  max-width: 420px;
+  max-width: 76mm;
+  gap: 1.8mm;
+  margin-top: 4mm;
+  padding-top: 3mm;
+  font-size: 9pt;
   margin-left: auto;
   color: #373a35;
 }
@@ -989,7 +1007,7 @@ textarea:focus {
 .multiline {
   margin: 0;
   color: #464a43;
-  line-height: 1.75;
+  line-height: 1.5;
   white-space: pre-wrap;
 }
 

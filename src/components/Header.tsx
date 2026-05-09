@@ -25,6 +25,7 @@ export function Header() {
         <p className="intro">
           一個給自由工作者與小型工作室使用的簡易報價單製作工具。不用登入、不需安裝，填寫資料後即可產生可列印、可另存 PDF 的報價單。
         </p>
+        <p className="desktop-hint">建議使用電腦版操作，填寫與預覽會更直覺。</p>
         <nav className="header-tool-shortcuts" aria-label="其他接案文件工具">
           {shortcuts.map((shortcut) => (
             <a
