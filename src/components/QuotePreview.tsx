@@ -33,10 +33,14 @@ function AlignedDetailLine({
   label: string;
   value: string;
 }) {
+  if (!value.trim()) {
+    return null;
+  }
+
   return (
-    <p className={value.trim() ? undefined : 'empty-detail'}>
+    <p>
       <span>{label}</span>
-      {value.trim() || '\u00A0'}
+      {value.trim()}
     </p>
   );
 }
