@@ -1,4 +1,5 @@
 import type { QuoteData } from '../types/quote';
+import { CollapsibleFieldGroup } from './CollapsibleFieldGroup';
 
 interface IssuerSectionProps {
   data: QuoteData;
@@ -120,77 +121,83 @@ export function IssuerSection({ data, onChange }: IssuerSectionProps) {
             onChange={(event) => update('issuerPhone', event.target.value)}
           />
         </label>
-        <label className="span-two">
-          地址
-          <input
-            value={data.issuerAddress}
-            onChange={(event) => update('issuerAddress', event.target.value)}
-            placeholder="可留空"
-          />
-        </label>
-        <label className="span-two">
-          網站
-          <input
-            value={data.issuerWebsite}
-            onChange={(event) => update('issuerWebsite', event.target.value)}
-            placeholder="可留空"
-          />
-        </label>
-        <div className="image-upload-card span-two">
-          <label>
-            報價方 Logo
-            <input
-              type="file"
-              accept="image/png,image/jpeg,image/webp"
-              onChange={(event) =>
-                void handleLogoUpload(event.currentTarget.files?.[0] ?? null)
-              }
-            />
-          </label>
-          <p className="upload-note">建議使用橫式或透明背景 Logo，系統會限制在預覽格內。</p>
-          <div className="logo-upload-preview" aria-label="報價方 Logo 預覽">
-            {data.issuerLogoImage ? (
-              <img src={data.issuerLogoImage} alt="報價方 Logo" />
-            ) : (
-              <span>尚未上傳</span>
-            )}
+        <CollapsibleFieldGroup title="LOGO、簽名檔、地址、網站">
+          <div className="field-grid two-columns nested-field-grid">
+            <div className="image-upload-card span-two">
+              <label>
+                報價方 Logo
+                <input
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp"
+                  onChange={(event) =>
+                    void handleLogoUpload(event.currentTarget.files?.[0] ?? null)
+                  }
+                />
+              </label>
+              <p className="upload-note">
+                建議使用橫式或透明背景 Logo，系統會限制在預覽格內。
+              </p>
+              <div className="logo-upload-preview" aria-label="報價方 Logo 預覽">
+                {data.issuerLogoImage ? (
+                  <img src={data.issuerLogoImage} alt="報價方 Logo" />
+                ) : (
+                  <span>尚未上傳</span>
+                )}
+              </div>
+              <button
+                className="text-button danger"
+                type="button"
+                disabled={!data.issuerLogoImage}
+                onClick={() => update('issuerLogoImage', '')}
+              >
+                移除 Logo
+              </button>
+            </div>
+            <div className="signature-upload-card span-two">
+              <label>
+                報價方簽名檔
+                <input
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp"
+                  onChange={(event) =>
+                    void handleSignatureUpload(event.currentTarget.files?.[0] ?? null)
+                  }
+                />
+              </label>
+              <div className="signature-upload-preview" aria-label="報價方簽名預覽">
+                {data.issuerSignatureImage ? (
+                  <img src={data.issuerSignatureImage} alt="報價方簽名" />
+                ) : (
+                  <span>尚未上傳</span>
+                )}
+              </div>
+              <button
+                className="text-button danger"
+                type="button"
+                disabled={!data.issuerSignatureImage}
+                onClick={() => update('issuerSignatureImage', '')}
+              >
+                移除簽名檔
+              </button>
+            </div>
+            <label className="span-two">
+              地址
+              <input
+                value={data.issuerAddress}
+                onChange={(event) => update('issuerAddress', event.target.value)}
+                placeholder="可留空"
+              />
+            </label>
+            <label className="span-two">
+              網站
+              <input
+                value={data.issuerWebsite}
+                onChange={(event) => update('issuerWebsite', event.target.value)}
+                placeholder="可留空"
+              />
+            </label>
           </div>
-          <button
-            className="text-button danger"
-            type="button"
-            disabled={!data.issuerLogoImage}
-            onClick={() => update('issuerLogoImage', '')}
-          >
-            移除 Logo
-          </button>
-        </div>
-        <div className="signature-upload-card span-two">
-          <label>
-            報價方簽名檔
-            <input
-              type="file"
-              accept="image/png,image/jpeg,image/webp"
-              onChange={(event) =>
-                void handleSignatureUpload(event.currentTarget.files?.[0] ?? null)
-              }
-            />
-          </label>
-          <div className="signature-upload-preview" aria-label="報價方簽名預覽">
-            {data.issuerSignatureImage ? (
-              <img src={data.issuerSignatureImage} alt="報價方簽名" />
-            ) : (
-              <span>尚未上傳</span>
-            )}
-          </div>
-          <button
-            className="text-button danger"
-            type="button"
-            disabled={!data.issuerSignatureImage}
-            onClick={() => update('issuerSignatureImage', '')}
-          >
-            移除簽名檔
-          </button>
-        </div>
+        </CollapsibleFieldGroup>
       </div>
     </section>
   );

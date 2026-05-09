@@ -343,6 +343,52 @@ button {
   gap: 14px;
 }
 
+.nested-field-grid {
+  margin-top: 16px;
+}
+
+.collapsible-field-group {
+  margin-top: 2px;
+}
+
+.collapsible-field-toggle {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid #d6d8ce;
+  border-radius: 8px;
+  background: #f8f8f4;
+  color: #20211f;
+  font-size: 0.98rem;
+  font-weight: 800;
+  text-align: left;
+}
+
+.collapsible-field-toggle:hover {
+  background: #f1f2ec;
+}
+
+.collapsible-field-toggle:focus-visible {
+  outline: 3px solid rgba(56, 77, 58, 0.22);
+  outline-offset: 2px;
+}
+
+.collapsible-field-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  color: #3c4139;
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.collapsible-field-content {
+  padding: 2px 0 0;
+}
+
 .two-columns {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
