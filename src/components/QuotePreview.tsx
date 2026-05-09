@@ -82,6 +82,11 @@ export function QuotePreview({ data, totals }: QuotePreviewProps) {
         <section className="preview-party-grid">
           <div className="preview-party">
             <h3>報價方</h3>
+            <div className="preview-logo-box">
+              {data.issuerLogoImage ? (
+                <img src={data.issuerLogoImage} alt="報價方 Logo" />
+              ) : null}
+            </div>
             <strong>{data.issuerCompany || data.issuerName || '報價方'}</strong>
             <AlignedDetailLine label="聯絡人" value={data.issuerName} />
             <AlignedDetailLine label="公司名稱" value={data.issuerCompany} />

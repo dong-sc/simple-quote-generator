@@ -7,8 +7,10 @@ interface IssuerSectionProps {
 
 const signatureImageMaxWidth = 900;
 const signatureImageMaxHeight = 360;
+const logoImageMaxWidth = 720;
+const logoImageMaxHeight = 360;
 
-function resizeSignatureImage(file: File): Promise<string> {
+function resizeImage(file: File, maxWidth: number, maxHeight: number): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 
@@ -17,8 +19,8 @@ function resizeSignatureImage(file: File): Promise<string> {
       image.onload = () => {
         const scale = Math.min(
           1,
-          signatureImageMaxWidth / image.width,
-          signatureImageMaxHeight / image.height,
+          maxWidth / image.width,
+          maxHeight / image.height,
         );
         const canvas = document.createElement('canvas');
         canvas.width = Math.max(1, Math.round(image.width * scale));
@@ -54,9 +56,24 @@ export function IssuerSection({ data, onChange }: IssuerSectionProps) {
     }
 
     try {
-      update('issuerSignatureImage', await resizeSignatureImage(file));
+      update(
+        'issuerSignatureImage',
+        await resizeImage(file, signatureImageMaxWidth, signatureImageMaxHeight),
+      );
     } catch {
       update('issuerSignatureImage', '');
+    }
+  }
+
+  async function handleLogoUpload(file: File | null) {
+    if (!file) {
+      return;
+    }
+
+    try {
+      update('issuerLogoImage', await resizeImage(file, logoImageMaxWidth, logoImageMaxHeight));
+    } catch {
+      update('issuerLogoImage', '');
     }
   }
 
@@ -119,6 +136,34 @@ export function IssuerSection({ data, onChange }: IssuerSectionProps) {
             placeholder="可留空"
           />
         </label>
+        <div className="image-upload-card span-two">
+          <label>
+            報價方 Logo
+            <input
+              type="file"
+              accept="image/png,image/jpeg,image/webp"
+              onChange={(event) =>
+                void handleLogoUpload(event.currentTarget.files?.[0] ?? null)
+              }
+            />
+          </label>
+          <p className="upload-note">建議使用橫式或透明背景 Logo，系統會限制在預覽格內。</p>
+          <div className="logo-upload-preview" aria-label="報價方 Logo 預覽">
+            {data.issuerLogoImage ? (
+              <img src={data.issuerLogoImage} alt="報價方 Logo" />
+            ) : (
+              <span>尚未上傳</span>
+            )}
+          </div>
+          <button
+            className="text-button danger"
+            type="button"
+            disabled={!data.issuerLogoImage}
+            onClick={() => update('issuerLogoImage', '')}
+          >
+            移除 Logo
+          </button>
+        </div>
         <div className="signature-upload-card span-two">
           <label>
             報價方簽名檔

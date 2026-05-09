@@ -83,6 +83,11 @@
     margin-top: 2mm;
   }
 
+  .preview-logo-box {
+    height: 16mm;
+    margin-bottom: 2.5mm;
+  }
+
   .preview-block {
     margin-top: 6mm;
   }
