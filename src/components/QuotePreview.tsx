@@ -2,6 +2,7 @@ import type { QuoteData, Totals } from '../types/quote';
 import { calculateItemSubtotal } from '../utils/calculation';
 import { clampNonNegative, formatCurrency } from '../utils/currency';
 import { addDays } from '../utils/date';
+import { formatQuoteItemName, getGroupedQuoteItems } from '../utils/items';
 
 interface QuotePreviewProps {
   data: QuoteData;
@@ -63,6 +64,7 @@ export function QuotePreview({ data, totals }: QuotePreviewProps) {
     data.deliveryNotes.trim() ||
     data.notes.trim() ||
     data.terms.trim();
+  const displayItems = getGroupedQuoteItems(data.items);
 
   return (
     <aside className="preview-pane" aria-label="報價單預覽">
@@ -126,9 +128,9 @@ export function QuotePreview({ data, totals }: QuotePreviewProps) {
                 </tr>
               </thead>
               <tbody>
-                {data.items.map((item, index) => (
+                {displayItems.map(({ item, originalIndex }) => (
                   <tr key={item.id}>
-                    <td>{item.name || `品項 ${index + 1}`}</td>
+                    <td>{formatQuoteItemName(item, originalIndex)}</td>
                     <td>{item.description || '-'}</td>
                     <td className="number-cell">{item.quantity || 0}</td>
                     <td>{item.unit || '-'}</td>

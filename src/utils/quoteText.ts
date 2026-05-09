@@ -2,6 +2,7 @@ import type { QuoteData, Totals } from '../types/quote';
 import { addDays } from './date';
 import { calculateItemSubtotal } from './calculation';
 import { clampNonNegative, formatCurrency } from './currency';
+import { formatQuoteItemName, getGroupedQuoteItems } from './items';
 
 function optionalLine(label: string, value: string): string[] {
   return value.trim() ? [`${label}：${value.trim()}`] : [];
@@ -15,8 +16,8 @@ export function generateQuotePlainText(data: QuoteData, totals: Totals): string 
     data.reimbursableExpenses.taxTreatment === 'included'
       ? '併入報價金額計算稅額'
       : '另列，不納入本次服務費稅額計算';
-  const itemLines = data.items.map((item, index) => {
-    const name = item.name.trim() || `品項 ${index + 1}`;
+  const itemLines = getGroupedQuoteItems(data.items).map(({ item, originalIndex }, index) => {
+    const name = formatQuoteItemName(item, originalIndex);
     const description = item.description.trim()
       ? `，說明：${item.description.trim()}`
       : '';

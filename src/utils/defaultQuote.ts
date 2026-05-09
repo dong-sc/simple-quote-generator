@@ -16,6 +16,7 @@ export const termTemplates = [
 export function createEmptyItem(): QuoteItem {
   return {
     id: crypto.randomUUID(),
+    category: '',
     name: '',
     description: '',
     quantity: 1,

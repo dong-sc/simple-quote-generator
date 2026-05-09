@@ -2,6 +2,7 @@ import type { QuoteData, Totals } from '../types/quote';
 import { calculateItemSubtotal } from './calculation';
 import { clampNonNegative, formatCurrency } from './currency';
 import { addDays } from './date';
+import { formatQuoteItemName, getGroupedQuoteItems } from './items';
 
 type CellValue = string | number;
 type MergeRange = {
@@ -152,9 +153,9 @@ export async function exportQuoteExcel(
   pushSectionTitle(rows, merges, '報價項目');
   rows.push(
     ['序號', '品項名稱', '說明', '數量', '單位', '單價', '小計', '備註'],
-    ...data.items.map((item, index) => [
+    ...getGroupedQuoteItems(data.items).map(({ item, originalIndex }, index) => [
       index + 1,
-      cleanText(item.name),
+      formatQuoteItemName(item, originalIndex),
       cleanText(item.description),
       clampNonNegative(item.quantity),
       cleanText(item.unit),

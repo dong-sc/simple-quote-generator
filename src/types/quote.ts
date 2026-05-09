@@ -4,6 +4,7 @@ export type ReimbursableTaxTreatment = 'separate' | 'included';
 
 export interface QuoteItem {
   id: string;
+  category: string;
   name: string;
   description: string;
   quantity: NumericInputValue;

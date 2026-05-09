@@ -50,6 +50,16 @@ export function QuoteItemsEditor({ data, onChange }: QuoteItemsEditorProps) {
             </div>
             <div className="field-grid item-grid">
               <label className="wide-field">
+                類別
+                <input
+                  value={item.category}
+                  onChange={(event) =>
+                    updateItem(item.id, { category: event.target.value })
+                  }
+                  placeholder="可留空，例如：攝影服務、設計費、顧問費"
+                />
+              </label>
+              <label className="wide-field">
                 品項名稱
                 <input
                   value={item.name}
