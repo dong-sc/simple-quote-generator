@@ -402,7 +402,11 @@ button {
 }
 
 .item-grid {
-  grid-template-columns: minmax(180px, 1.4fr) repeat(4, minmax(90px, 0.8fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.item-grid > label {
+  min-width: 0;
 }
 
 label,
