@@ -67,12 +67,13 @@
 
   .preview-header {
     gap: 12mm;
-    padding-bottom: 5mm;
+    align-items: flex-start;
+    padding-bottom: 4mm;
     border-bottom-width: 1.5pt;
   }
 
   .preview-header-side {
-    gap: 3mm;
+    gap: 2mm;
   }
 
   .preview-party-grid {
@@ -88,8 +89,8 @@
   }
 
   .preview-logo-box {
-    width: 38mm;
-    height: 16mm;
+    width: 32mm;
+    height: 12mm;
   }
 
   .preview-block {

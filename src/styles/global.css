@@ -653,9 +653,10 @@ textarea:focus {
 
 .preview-header {
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 24px;
-  padding-bottom: 24px;
+  padding-bottom: 18px;
   border-bottom: 2px solid #252525;
 }
 
@@ -679,7 +680,7 @@ textarea:focus {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 12px;
+  gap: 8px;
 }
 
 .preview-meta {
@@ -738,8 +739,8 @@ textarea:focus {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  width: 180px;
-  height: 72px;
+  width: 160px;
+  height: 56px;
   overflow: hidden;
 }
 
@@ -829,8 +830,13 @@ textarea:focus {
 
 .print-measure-container .preview-header {
   gap: 12mm;
-  padding-bottom: 5mm;
+  align-items: flex-start;
+  padding-bottom: 4mm;
   border-bottom-width: 1.5pt;
+}
+
+.print-measure-container .preview-header-side {
+  gap: 2mm;
 }
 
 .print-measure-container .preview-party-grid {
@@ -843,6 +849,11 @@ textarea:focus {
 .print-measure-container .preview-party p,
 .print-measure-container .preview-meta p {
   margin-top: 2mm;
+}
+
+.print-measure-container .preview-logo-box {
+  width: 32mm;
+  height: 12mm;
 }
 
 .print-measure-container .preview-block {
