@@ -88,6 +88,7 @@ export function QuotePreview({ data, totals }: QuotePreviewProps) {
 
         <section className="preview-party-grid">
           <div className="preview-party">
+            <h3>報價方</h3>
             <strong>{data.issuerCompany || data.issuerName || '報價方'}</strong>
             <AlignedDetailLine label="聯絡人" value={data.issuerName} />
             <AlignedDetailLine label="公司名稱" value={data.issuerCompany} />
