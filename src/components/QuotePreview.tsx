@@ -72,21 +72,22 @@ export function QuotePreview({ data, totals }: QuotePreviewProps) {
             <p className="preview-label">Quotation</p>
             <h2>{data.title || '報價單'}</h2>
           </div>
-          <div className="preview-meta">
-            <DetailLine label="編號" value={data.quoteNumber} />
-            <DetailLine label="日期" value={data.issueDate} />
-            <DetailLine label="有效至" value={validUntil} />
+          <div className="preview-header-side">
+            {data.issuerLogoImage ? (
+              <div className="preview-logo-box">
+                <img src={data.issuerLogoImage} alt="Logo" />
+              </div>
+            ) : null}
+            <div className="preview-meta">
+              <DetailLine label="編號" value={data.quoteNumber} />
+              <DetailLine label="日期" value={data.issueDate} />
+              <DetailLine label="有效至" value={validUntil} />
+            </div>
           </div>
         </header>
 
         <section className="preview-party-grid">
           <div className="preview-party">
-            <h3>報價方</h3>
-            <div className="preview-logo-box">
-              {data.issuerLogoImage ? (
-                <img src={data.issuerLogoImage} alt="報價方 Logo" />
-              ) : null}
-            </div>
             <strong>{data.issuerCompany || data.issuerName || '報價方'}</strong>
             <AlignedDetailLine label="聯絡人" value={data.issuerName} />
             <AlignedDetailLine label="公司名稱" value={data.issuerCompany} />

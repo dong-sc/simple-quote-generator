@@ -629,6 +629,13 @@ textarea:focus {
   line-height: 1.15;
 }
 
+.preview-header-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
 .preview-meta {
   min-width: 180px;
   color: #464a43;
@@ -684,14 +691,10 @@ textarea:focus {
 .preview-logo-box {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  width: 100%;
+  justify-content: flex-end;
+  width: 180px;
   height: 72px;
-  margin-bottom: 10px;
   overflow: hidden;
-  border: 1px solid #e4e4dc;
-  border-radius: 6px;
-  background: #ffffff;
 }
 
 .preview-logo-box img {
