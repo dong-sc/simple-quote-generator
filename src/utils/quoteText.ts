@@ -2,7 +2,11 @@ import type { QuoteData, Totals } from '../types/quote';
 import { addDays } from './date';
 import { calculateItemSubtotal } from './calculation';
 import { clampNonNegative, formatCurrency } from './currency';
-import { formatQuoteItemName, getGroupedQuoteItems } from './items';
+import {
+  formatQuoteItemCategory,
+  formatQuoteItemName,
+  getGroupedQuoteItems,
+} from './items';
 
 function optionalLine(label: string, value: string): string[] {
   return value.trim() ? [`${label}：${value.trim()}`] : [];
@@ -18,12 +22,15 @@ export function generateQuotePlainText(data: QuoteData, totals: Totals): string 
       : '另列，不納入本次服務費稅額計算';
   const itemLines = getGroupedQuoteItems(data.items).map(({ item, originalIndex }, index) => {
     const name = formatQuoteItemName(item, originalIndex);
+    const category = formatQuoteItemCategory(item)
+      ? `類別：${formatQuoteItemCategory(item)}，`
+      : '';
     const description = item.description.trim()
       ? `，說明：${item.description.trim()}`
       : '';
     const subtotal = formatCurrency(calculateItemSubtotal(item), data.currency);
 
-    return `${index + 1}. ${name}${description}，數量：${item.quantity || 0} ${
+    return `${index + 1}. ${category}品項：${name}${description}，數量：${item.quantity || 0} ${
       item.unit || ''
     }，單價：${formatCurrency(item.unitPrice || 0, data.currency)}，小計：${subtotal}`;
   });

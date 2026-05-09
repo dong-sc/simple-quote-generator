@@ -2,7 +2,11 @@ import type { QuoteData, Totals } from '../types/quote';
 import { calculateItemSubtotal } from './calculation';
 import { clampNonNegative, formatCurrency } from './currency';
 import { addDays } from './date';
-import { formatQuoteItemName, getGroupedQuoteItems } from './items';
+import {
+  formatQuoteItemCategory,
+  formatQuoteItemName,
+  getGroupedQuoteItems,
+} from './items';
 
 type CellValue = string | number;
 type MergeRange = {
@@ -48,7 +52,7 @@ function pushSectionTitle(
     rows.push([]);
   }
 
-  pushMergedRow(rows, merges, [title], 7);
+  pushMergedRow(rows, merges, [title], 8);
 }
 
 function pushWideRow(
@@ -58,8 +62,8 @@ function pushWideRow(
   value: CellValue,
 ): void {
   const rowIndex = rows.length;
-  rows.push([label, value, '', '', '', '', '', '']);
-  merges.push({ s: { r: rowIndex, c: 1 }, e: { r: rowIndex, c: 7 } });
+  rows.push([label, value, '', '', '', '', '', '', '']);
+  merges.push({ s: { r: rowIndex, c: 1 }, e: { r: rowIndex, c: 8 } });
 }
 
 function pushPartyInfo(
@@ -69,7 +73,7 @@ function pushPartyInfo(
   rightRows: CellValue[][],
 ): void {
   const headingRowIndex = rows.length;
-  rows.push(['報價方資訊', '', '', '', '客戶資訊', '', '', '']);
+  rows.push(['報價方資訊', '', '', '', '客戶資訊', '', '', '', '']);
   merges.push({ s: { r: headingRowIndex, c: 0 }, e: { r: headingRowIndex, c: 3 } });
   merges.push({ s: { r: headingRowIndex, c: 4 }, e: { r: headingRowIndex, c: 7 } });
 
@@ -77,7 +81,7 @@ function pushPartyInfo(
   for (let index = 0; index < rowCount; index += 1) {
     const leftRow = leftRows[index] ?? ['', ''];
     const rightRow = rightRows[index] ?? ['', ''];
-    rows.push([leftRow[0], leftRow[1], '', '', rightRow[0], rightRow[1], '', '']);
+    rows.push([leftRow[0], leftRow[1], '', '', rightRow[0], rightRow[1], '', '', '']);
   }
 }
 
@@ -100,7 +104,7 @@ export async function exportQuoteExcel(
   const rows: CellValue[][] = [];
   const merges: MergeRange[] = [];
 
-  pushMergedRow(rows, merges, [cleanText(data.title) || '報價單'], 7);
+  pushMergedRow(rows, merges, [cleanText(data.title) || '報價單'], 8);
   rows.push([
     '文件類型',
     '報價單',
@@ -109,6 +113,7 @@ export async function exportQuoteExcel(
     cleanText(data.quoteNumber),
     '報價日期',
     cleanText(data.issueDate),
+    '',
     '',
   ]);
   rows.push([
@@ -120,11 +125,12 @@ export async function exportQuoteExcel(
     '匯出日期',
     new Date().toISOString().slice(0, 10),
     '',
+    '',
   ]);
   pushSectionTitle(rows, merges, '報價資訊');
   rows.push(
-    ['報價單標題', cleanText(data.title), '', '', '有效期限', `${data.validUntilDays || 0} 天`, '', ''],
-    ['報價單編號', cleanText(data.quoteNumber), '', '', '幣別', data.currency, '', ''],
+    ['報價單標題', cleanText(data.title), '', '', '有效期限', `${data.validUntilDays || 0} 天`, '', '', ''],
+    ['報價單編號', cleanText(data.quoteNumber), '', '', '幣別', data.currency, '', '', ''],
   );
   rows.push([]);
   pushPartyInfo(
@@ -152,9 +158,10 @@ export async function exportQuoteExcel(
 
   pushSectionTitle(rows, merges, '報價項目');
   rows.push(
-    ['序號', '品項名稱', '說明', '數量', '單位', '單價', '小計', '備註'],
+    ['序號', '類別', '品項名稱', '說明', '數量', '單位', '單價', '小計', '備註'],
     ...getGroupedQuoteItems(data.items).map(({ item, originalIndex }, index) => [
       index + 1,
+      formatQuoteItemCategory(item),
       formatQuoteItemName(item, originalIndex),
       cleanText(item.description),
       clampNonNegative(item.quantity),
@@ -167,9 +174,9 @@ export async function exportQuoteExcel(
 
   pushSectionTitle(rows, merges, '金額摘要');
   rows.push(
-    ['', '', '', '', '欄位', '', '金額 / 內容', ''],
-    ['', '', '', '', '服務費小計', '', formatCurrency(totals.serviceSubtotal, data.currency), ''],
-    ['', '', '', '', '折扣', '', formatCurrency(totals.discountAmount, data.currency), ''],
+    ['', '', '', '', '欄位', '', '金額 / 內容', '', ''],
+    ['', '', '', '', '服務費小計', '', formatCurrency(totals.serviceSubtotal, data.currency), '', ''],
+    ['', '', '', '', '折扣', '', formatCurrency(totals.discountAmount, data.currency), '', ''],
     [
       '',
       '',
@@ -182,13 +189,14 @@ export async function exportQuoteExcel(
         data.currency,
       ),
       '',
+      '',
     ],
-    ['', '', '', '', '稅率', '', `${taxRate}%`, ''],
-    ['', '', '', '', '稅額', '', formatCurrency(totals.taxAmount, data.currency), ''],
-    ['', '', '', '', '本次報價小計', '', formatCurrency(totals.quoteSubtotal, data.currency), ''],
-    ['', '', '', '', '實報實銷狀態', '', reimbursableEnabled ? '啟用' : '未啟用', ''],
+    ['', '', '', '', '稅率', '', `${taxRate}%`, '', ''],
+    ['', '', '', '', '稅額', '', formatCurrency(totals.taxAmount, data.currency), '', ''],
+    ['', '', '', '', '本次報價小計', '', formatCurrency(totals.quoteSubtotal, data.currency), '', ''],
+    ['', '', '', '', '實報實銷狀態', '', reimbursableEnabled ? '啟用' : '未啟用', '', ''],
     ...(reimbursableEnabled
-      ? [['', '', '', '', '實報實銷處理方式', '', reimbursableTreatment, '']]
+      ? [['', '', '', '', '實報實銷處理方式', '', reimbursableTreatment, '', '']]
       : []),
     ...(hasReimbursableEstimate
       ? [
@@ -201,11 +209,12 @@ export async function exportQuoteExcel(
             '',
             formatCurrency(totals.reimbursableEstimate, data.currency),
             '',
+            '',
           ],
         ]
       : []),
     ...(totals.estimatedTotal !== null
-      ? [['', '', '', '', '預估總額', '', formatCurrency(totals.estimatedTotal, data.currency), '']]
+      ? [['', '', '', '', '預估總額', '', formatCurrency(totals.estimatedTotal, data.currency), '', '']]
       : []),
   );
 
@@ -226,6 +235,7 @@ export async function exportQuoteExcel(
   const worksheet = XLSX.utils.aoa_to_sheet(rows);
   worksheet['!cols'] = [
     { wch: 14 },
+    { wch: 16 },
     { wch: 24 },
     { wch: 30 },
     { wch: 10 },

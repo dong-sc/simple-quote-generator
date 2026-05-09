@@ -44,8 +44,9 @@ export function getGroupedQuoteItems(items: QuoteItem[]): DisplayQuoteItem[] {
 }
 
 export function formatQuoteItemName(item: QuoteItem, fallbackIndex: number): string {
-  const name = item.name.trim() || `品項 ${fallbackIndex + 1}`;
-  const category = (item.category || '').trim();
+  return item.name.trim() || `品項 ${fallbackIndex + 1}`;
+}
 
-  return category ? `【${category}】${name}` : name;
+export function formatQuoteItemCategory(item: QuoteItem): string {
+  return (item.category || '').trim();
 }
