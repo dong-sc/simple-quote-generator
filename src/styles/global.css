@@ -17,6 +17,76 @@ body {
   min-width: 320px;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.dong-tools-bar {
+  border-bottom: 1px solid #282828;
+  background: #111111;
+  color: #ffffff;
+}
+
+.dong-tools-bar-inner {
+  display: flex;
+  min-height: 44px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 28px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.dong-tools-brand,
+.dong-tools-hub-link {
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+}
+
+.dong-tools-brand {
+  gap: 9px;
+  font-size: 0.86rem;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+}
+
+.dong-tools-brand img {
+  width: 23px;
+  height: 23px;
+  border-radius: 6px;
+}
+
+.dong-tools-hub-link {
+  gap: 5px;
+  color: #a3a3a3;
+  font-size: 0.78rem;
+  font-weight: 650;
+}
+
+.dong-tools-brand:hover,
+.dong-tools-hub-link:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.dong-tools-brand:focus-visible,
+.dong-tools-hub-link:focus-visible {
+  border-radius: 3px;
+  outline: 2px solid #ffffff;
+  outline-offset: 4px;
+}
+
 button,
 input,
 select,
@@ -1026,6 +1096,10 @@ textarea:focus {
 }
 
 @media (max-width: 760px) {
+  .dong-tools-bar-inner {
+    min-height: 42px;
+    padding: 0 18px;
+  }
   .site-header {
     flex-direction: column;
     padding: 28px 18px 16px;
