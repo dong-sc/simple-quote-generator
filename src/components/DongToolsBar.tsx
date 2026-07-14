@@ -1,4 +1,4 @@
-const hubUrl = 'https://dong-tools-suite.lovable.app/';
+const hubUrl = 'https://tools.donglinphoto.com/';
 
 export function DongToolsBar() {
   return (
