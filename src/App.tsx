@@ -20,34 +20,6 @@ function getPrintableTitle(title: string): string {
   return `${safeTitle}_報價單`;
 }
 
-function detectSecondPrintPage(): boolean {
-  const preview = document.querySelector<HTMLElement>('.quote-preview');
-  if (!preview) {
-    return false;
-  }
-
-  const measuringContainer = document.createElement('div');
-  measuringContainer.className = 'print-measure-container';
-
-  const clonedPreview = preview.cloneNode(true) as HTMLElement;
-  clonedPreview.querySelector('.print-next-page-notice')?.remove();
-  measuringContainer.append(clonedPreview);
-  document.body.append(measuringContainer);
-
-  const printablePageHeightPx = (274 / 25.4) * 96;
-  const measuredHeight = clonedPreview.scrollHeight;
-  measuringContainer.remove();
-
-  return measuredHeight > printablePageHeightPx;
-}
-
-function setSecondPageNotice(hasSecondPage: boolean): void {
-  const notice = document.querySelector<HTMLElement>('.print-next-page-notice');
-  if (notice) {
-    notice.dataset.hasSecondPage = String(hasSecondPage);
-  }
-}
-
 export default function App() {
   const [quoteData, setQuoteData] = useState<QuoteData>(() => loadQuoteData());
   const [copyMessage, setCopyMessage] = useState('');
@@ -82,14 +54,11 @@ export default function App() {
 
   function handlePrint() {
     const originalTitle = document.title;
-    const hasSecondPage = detectSecondPrintPage();
 
     document.title = getPrintableTitle(quoteData.title);
-    setSecondPageNotice(hasSecondPage);
 
     const restoreTitle = () => {
       document.title = originalTitle;
-      setSecondPageNotice(false);
       window.removeEventListener('afterprint', restoreTitle);
     };
 
