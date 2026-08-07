@@ -1199,3 +1199,10 @@ textarea:focus {
     max-width: none;
   }
 }
+
+.visitor-counter {
+  margin: 18px 0 0;
+  text-align: center;
+  font-size: 0.78rem;
+  color: #6b6f68;
+}

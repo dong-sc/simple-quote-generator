@@ -6,6 +6,7 @@ import { Header } from './components/Header';
 import { QuoteForm } from './components/QuoteForm';
 import { QuotePreview } from './components/QuotePreview';
 import { SupportSection } from './components/SupportSection';
+import { VisitorCounter } from './components/VisitorCounter';
 import { calculateTotals } from './utils/calculation';
 import { exportQuoteExcel } from './utils/exportQuoteExcel';
 import { clearQuoteData, loadQuoteData, saveQuoteData } from './utils/storage';
@@ -117,6 +118,7 @@ export default function App() {
         </section>
         <SupportSection />
         <AuthorPromoSection />
+        <VisitorCounter />
       </main>
     </>
   );
