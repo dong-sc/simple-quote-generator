@@ -194,14 +194,4 @@
   .multiline {
     line-height: 1.5;
   }
-
-  .print-next-page-notice[data-has-second-page="true"] {
-    display: block;
-    margin: 5mm 0 0;
-    padding-top: 3mm;
-    border-top: 1px solid #d6d6d6;
-    color: #555555;
-    font-size: 8.5pt;
-    text-align: right;
-  }
 }
