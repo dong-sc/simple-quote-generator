@@ -92,7 +92,9 @@ export function generateQuotePlainText(data: QuoteData, totals: Totals): string 
     ...itemLines,
     '',
     `服務費小計：${formatCurrency(totals.serviceSubtotal, data.currency)}`,
-    `折扣：${formatCurrency(totals.discountAmount, data.currency)}`,
+    ...(data.discountEnabled
+      ? [`折扣：${formatCurrency(totals.discountAmount, data.currency)}`]
+      : []),
     ...(data.reimbursableExpenses.enabled &&
     data.reimbursableExpenses.hasEstimate &&
     data.reimbursableExpenses.taxTreatment === 'included'

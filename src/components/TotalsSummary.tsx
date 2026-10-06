@@ -16,10 +16,12 @@ export function TotalsSummary({ data, totals }: TotalsSummaryProps) {
         <span>服務費小計</span>
         <strong>{formatCurrency(totals.serviceSubtotal, data.currency)}</strong>
       </div>
-      <div>
-        <span>折扣</span>
-        <strong>{formatCurrency(totals.discountAmount, data.currency)}</strong>
-      </div>
+      {data.discountEnabled ? (
+        <div>
+          <span>折扣</span>
+          <strong>{formatCurrency(totals.discountAmount, data.currency)}</strong>
+        </div>
+      ) : null}
       <div>
         <span>{taxLabel}</span>
         <strong>{formatCurrency(totals.taxAmount, data.currency)}</strong>

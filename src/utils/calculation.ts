@@ -13,7 +13,9 @@ export function calculateTotals(data: QuoteData): Totals {
     (sum, item) => sum + calculateItemSubtotal(item),
     0,
   );
-  const discountAmount = clampNonNegative(data.discountAmount);
+  const discountAmount = data.discountEnabled
+    ? clampNonNegative(data.discountAmount)
+    : 0;
   const reimbursableEstimate = data.reimbursableExpenses.hasEstimate
     ? clampNonNegative(parseSafeNumber(data.reimbursableExpenses.estimatedAmount))
     : 0;
