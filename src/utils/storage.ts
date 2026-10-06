@@ -20,6 +20,8 @@ function normalizeQuoteData(value: unknown): QuoteData {
   return {
     ...fallback,
     ...data,
+    discountEnabled:
+      typeof data.discountEnabled === 'boolean' ? data.discountEnabled : true,
     issuerCompany,
     items:
       Array.isArray(data.items) && data.items.length > 0

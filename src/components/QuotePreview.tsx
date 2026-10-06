@@ -162,10 +162,12 @@ export function QuotePreview({ data, totals }: QuotePreviewProps) {
             <span>服務費小計</span>
             <strong>{formatCurrency(totals.serviceSubtotal, data.currency)}</strong>
           </div>
-          <div>
-            <span>折扣</span>
-            <strong>{formatCurrency(totals.discountAmount, data.currency)}</strong>
-          </div>
+          {data.discountEnabled ? (
+            <div>
+              <span>折扣</span>
+              <strong>{formatCurrency(totals.discountAmount, data.currency)}</strong>
+            </div>
+          ) : null}
           {shouldIncludeReimbursableInTax ? (
             <div>
               <span>實報實銷預估</span>

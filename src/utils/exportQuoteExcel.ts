@@ -176,21 +176,23 @@ export async function exportQuoteExcel(
   rows.push(
     ['', '', '', '', '欄位', '', '金額 / 內容', '', ''],
     ['', '', '', '', '服務費小計', '', formatCurrency(totals.serviceSubtotal, data.currency), '', ''],
-    ['', '', '', '', '折扣', '', formatCurrency(totals.discountAmount, data.currency), '', ''],
-    [
-      '',
-      '',
-      '',
-      '',
-      '折扣後金額',
-      '',
-      formatCurrency(
-        Math.max(0, totals.serviceSubtotal - totals.discountAmount),
-        data.currency,
-      ),
-      '',
-      '',
-    ],
+    ...(data.discountEnabled ? [
+      ['', '', '', '', '折扣', '', formatCurrency(totals.discountAmount, data.currency), '', ''],
+      [
+        '',
+        '',
+        '',
+        '',
+        '折扣後金額',
+        '',
+        formatCurrency(
+          Math.max(0, totals.serviceSubtotal - totals.discountAmount),
+          data.currency,
+        ),
+        '',
+        '',
+      ],
+    ] : []),
     ['', '', '', '', '稅率', '', `${taxRate}%`, '', ''],
     ['', '', '', '', '稅額', '', formatCurrency(totals.taxAmount, data.currency), '', ''],
     ['', '', '', '', '本次報價小計', '', formatCurrency(totals.quoteSubtotal, data.currency), '', ''],

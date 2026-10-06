@@ -42,6 +42,7 @@ export interface QuoteData {
   clientAddress: string;
   clientWebsite: string;
   items: QuoteItem[];
+  discountEnabled: boolean;
   discountAmount: NumericInputValue;
   taxRate: NumericInputValue;
   reimbursableExpenses: ReimbursableExpenses;

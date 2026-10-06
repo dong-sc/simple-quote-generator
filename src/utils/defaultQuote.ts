@@ -48,6 +48,7 @@ export function createDefaultQuoteData(): QuoteData {
     clientAddress: '',
     clientWebsite: '',
     items: [createEmptyItem()],
+    discountEnabled: false,
     discountAmount: 0,
     taxRate: 5,
     reimbursableExpenses: {

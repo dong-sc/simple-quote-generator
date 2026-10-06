@@ -12,21 +12,33 @@ export function TotalsEditor({ data, onChange, totals }: TotalsEditorProps) {
   return (
     <section className="form-section">
       <h2>金額計算</h2>
+      <label className="checkbox-field">
+        <input
+          type="checkbox"
+          checked={data.discountEnabled}
+          onChange={(event) =>
+            onChange({ ...data, discountEnabled: event.target.checked })
+          }
+        />
+        是否套用折扣
+      </label>
       <div className="field-grid two-columns">
-        <label>
-          折扣金額
-          <input
-            min="0"
-            type="number"
-            value={data.discountAmount}
-            onChange={(event) =>
-              onChange({
-                ...data,
-                discountAmount: parseNumberInput(event.target.value),
-              })
-            }
-          />
-        </label>
+        {data.discountEnabled ? (
+          <label>
+            折扣金額
+            <input
+              min="0"
+              type="number"
+              value={data.discountAmount}
+              onChange={(event) =>
+                onChange({
+                  ...data,
+                  discountAmount: parseNumberInput(event.target.value),
+                })
+              }
+            />
+          </label>
+        ) : null}
         <label>
           稅率（%）
           <input
