@@ -51,6 +51,23 @@ try {
       saveQuoteData(data);
       assert.equal(loadQuoteData().discountEnabled, enabled);
     }
+    const signatureImage = 'data:image/png;base64,c2lnbmF0dXJl';
+    data.issuerSignatureImage = signatureImage;
+    for (const showSignatures of [false, true]) {
+      data.showSignatures = showSignatures;
+      const html = renderToStaticMarkup(createElement(QuotePreview, { data, totals: calculateTotals(data) }));
+      assert.equal(html.includes('報價方簽名簽章'), showSignatures);
+      assert.equal(html.includes('客戶簽名簽章'), showSignatures);
+      assert.equal(html.includes(signatureImage), showSignatures);
+      saveQuoteData(data);
+      assert.equal(loadQuoteData().showSignatures, showSignatures);
+      assert.equal(loadQuoteData().issuerSignatureImage, signatureImage);
+    }
+    const oldSignatureData = { ...data };
+    delete oldSignatureData.showSignatures;
+    saveQuoteData(oldSignatureData);
+    assert.equal(loadQuoteData().showSignatures, true);
+    assert.equal(clearQuoteData().showSignatures, true);
     const legacy = { ...data };
     delete legacy.discountEnabled;
     saveQuoteData(legacy);

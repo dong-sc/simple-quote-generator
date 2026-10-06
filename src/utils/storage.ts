@@ -22,6 +22,8 @@ function normalizeQuoteData(value: unknown): QuoteData {
     ...data,
     discountEnabled:
       typeof data.discountEnabled === 'boolean' ? data.discountEnabled : true,
+    showSignatures:
+      typeof data.showSignatures === 'boolean' ? data.showSignatures : true,
     issuerCompany,
     items:
       Array.isArray(data.items) && data.items.length > 0

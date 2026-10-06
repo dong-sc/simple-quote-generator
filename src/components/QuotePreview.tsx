@@ -244,20 +244,22 @@ export function QuotePreview({ data, totals }: QuotePreviewProps) {
           </section>
         ) : null}
 
-        <section className="preview-signatures" aria-label="簽名欄位">
-          <div className="preview-signature-card">
-            <h3>報價方簽名簽章</h3>
-            <div className="preview-signature-box">
-              {data.issuerSignatureImage ? (
-                <img src={data.issuerSignatureImage} alt="報價方簽名" />
-              ) : null}
+        {data.showSignatures ? (
+          <section className="preview-signatures" aria-label="簽名欄位">
+            <div className="preview-signature-card">
+              <h3>報價方簽名簽章</h3>
+              <div className="preview-signature-box">
+                {data.issuerSignatureImage ? (
+                  <img src={data.issuerSignatureImage} alt="報價方簽名" />
+                ) : null}
+              </div>
             </div>
-          </div>
-          <div className="preview-signature-card">
-            <h3>客戶簽名簽章</h3>
-            <div className="preview-signature-box" />
-          </div>
-        </section>
+            <div className="preview-signature-card">
+              <h3>客戶簽名簽章</h3>
+              <div className="preview-signature-box" />
+            </div>
+          </section>
+        ) : null}
       </article>
     </aside>
   );
