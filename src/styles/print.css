@@ -50,6 +50,7 @@
 
   .quote-preview {
     width: 100%;
+    min-height: 0;
     padding: 0;
     border: 0;
     border-radius: 0;
