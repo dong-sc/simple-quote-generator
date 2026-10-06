@@ -73,6 +73,14 @@ export function QuoteForm({ data, onChange, totals }: QuoteFormProps) {
             </select>
           </label>
         </div>
+        <label className="checkbox-field">
+          <input
+            type="checkbox"
+            checked={data.showSignatures}
+            onChange={(event) => update('showSignatures', event.target.checked)}
+          />
+          顯示簽名簽章
+        </label>
       </section>
 
       <IssuerSection data={data} onChange={onChange} />

@@ -50,6 +50,7 @@ export interface QuoteData {
   deliveryNotes: string;
   notes: string;
   terms: string;
+  showSignatures: boolean;
   issuerSignatureImage: string;
 }
 
