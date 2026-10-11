@@ -62,9 +62,9 @@ body {
 }
 
 .dong-tools-brand img {
-  width: 23px;
-  height: 23px;
-  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
 }
 
 .dong-tools-hub-link {
@@ -1064,3 +1064,5 @@ textarea:focus {
   font-size: 0.78rem;
   color: #6b6f68;
 }
+
+.dong-tools-family { color: #b7bbb7; font-size: 0.72rem; font-weight: 500; }
