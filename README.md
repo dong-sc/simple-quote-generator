@@ -131,3 +131,8 @@ export const githubSponsorsUrl = "https://github.com/sponsors/your-account";
 
 網站底部已提供「分享這個工具」與「複製分享連結」。
 分享文字與正式網址同樣集中在 `src/utils/projectLinks.ts`，可依專案語氣調整。
+
+
+## 靜態 HTML
+
+`npm run build` 會把同一個 React 表單的空白預設狀態預先輸出至 HTML，讓工具標題、欄位與相關工具連結可直接讀取並穩定首屏版面。預先輸出的表單在 JavaScript 還原本機草稿前不可輸入；建置不讀取瀏覽器草稿或使用者檔案，也不需要伺服器 runtime。

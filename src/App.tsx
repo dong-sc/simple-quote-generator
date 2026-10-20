@@ -26,6 +26,10 @@ export default function App() {
   const totals = useMemo(() => calculateTotals(quoteData), [quoteData]);
 
   useEffect(() => {
+    document.getElementById('root')?.removeAttribute('inert');
+  }, []);
+
+  useEffect(() => {
     saveQuoteData(quoteData);
   }, [quoteData]);
 
