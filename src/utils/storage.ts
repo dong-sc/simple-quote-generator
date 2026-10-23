@@ -5,6 +5,7 @@ const storageKey = 'simple-quote-generator.quote-data';
 
 // Do not let mount autosave overwrite a draft that could not be read.
 let preserveUnreadDraft = false;
+let expectedStoredValue: string | null | undefined;
 
 function normalizeQuoteData(value: unknown): QuoteData {
   const fallback = createDefaultQuoteData();
@@ -46,6 +47,7 @@ function normalizeQuoteData(value: unknown): QuoteData {
 export function loadQuoteData(): QuoteData {
   try {
     const storedValue = localStorage.getItem(storageKey);
+    expectedStoredValue = storedValue;
     if (!storedValue) {
       return createDefaultQuoteData();
     }
@@ -61,7 +63,14 @@ export function saveQuoteData(data: QuoteData): boolean {
   if (preserveUnreadDraft) return false;
 
   try {
-    localStorage.setItem(storageKey, JSON.stringify(data));
+    // Best-effort conflict detection; localStorage has no atomic compare-and-swap.
+    if (localStorage.getItem(storageKey) !== expectedStoredValue) {
+      preserveUnreadDraft = true;
+      return false;
+    }
+    const serialized = JSON.stringify(data);
+    localStorage.setItem(storageKey, serialized);
+    expectedStoredValue = serialized;
     return true;
   } catch {
     // Keep the current document usable when browser storage is unavailable or full.
@@ -74,6 +83,7 @@ export function clearQuoteData(): QuoteData {
   preserveUnreadDraft = false;
   try {
     localStorage.removeItem(storageKey);
+    expectedStoredValue = null;
   } catch {
     // Reset the in-memory document even when browser storage is unavailable.
   }

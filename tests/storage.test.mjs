@@ -124,3 +124,42 @@ test('a temporarily blocked read cannot silently replace the previous draft', ()
   assert.equal(persisted, '{"title":"Original draft"}');
   assert.equal(save(clear()), true);
 });
+
+test('another tab update or deletion prevents stale autosave', () => {
+  for (const externalValue of ['{"title":"Other tab update"}', null]) {
+    delete require.cache[require.resolve(join(output, 'utils/storage.js'))];
+    const tab = require(join(output, 'utils/storage.js'));
+    let persisted = '{"title":"Initially shared draft"}';
+    globalThis.localStorage = {
+      getItem: () => persisted,
+      setItem: (_key, value) => { persisted = value; },
+      removeItem: () => { persisted = null; },
+    };
+    const pending = { ...tab.loadQuoteData(), title: 'Unsaved local edits' };
+    persisted = externalValue;
+    assert.equal(tab.saveQuoteData(pending), false);
+    assert.equal(persisted, externalValue);
+    assert.equal(pending.title, 'Unsaved local edits');
+    const fresh = tab.clearQuoteData();
+    assert.equal(tab.saveQuoteData(fresh), true);
+  }
+});
+
+test('own saves advance the expected value, but failed writes do not', () => {
+  delete require.cache[require.resolve(join(output, 'utils/storage.js'))];
+  const tab = require(join(output, 'utils/storage.js'));
+  let persisted = null;
+  let full = false;
+  globalThis.localStorage = {
+    getItem: () => persisted,
+    setItem: (_key, value) => { if (full) throw new Error('QuotaExceededError'); persisted = value; },
+    removeItem: () => { persisted = null; },
+  };
+  const data = tab.loadQuoteData();
+  assert.equal(tab.saveQuoteData({ ...data, title: 'First save' }), true);
+  full = true;
+  assert.equal(tab.saveQuoteData({ ...data, title: 'Failed save' }), false);
+  full = false;
+  assert.equal(tab.saveQuoteData({ ...data, title: 'Recovered save' }), true);
+  assert.equal(tab.loadQuoteData().title, 'Recovered save');
+});

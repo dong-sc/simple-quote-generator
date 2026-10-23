@@ -4,7 +4,7 @@ import { createServer } from 'vite';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-const server = await createServer({ server: { middlewareMode: true } });
+const server = await createServer({ server: { middlewareMode: true, hmr: false, ws: false } });
 const stored = new Map();
 globalThis.localStorage = {
   getItem: (key) => stored.get(key) ?? null,
@@ -25,6 +25,7 @@ try {
   const originalWriteFile = XLSX.writeFile;
   XLSX.writeFile = (workbook) => { exported = workbook; };
   try {
+    loadQuoteData(); // Match App initialization before the first autosave.
     const data = createDefaultQuoteData();
     assert.equal(data.discountEnabled, false);
     data.items[0].quantity = 2;
