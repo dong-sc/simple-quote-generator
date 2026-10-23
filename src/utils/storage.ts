@@ -49,11 +49,21 @@ export function loadQuoteData(): QuoteData {
   }
 }
 
-export function saveQuoteData(data: QuoteData): void {
-  localStorage.setItem(storageKey, JSON.stringify(data));
+export function saveQuoteData(data: QuoteData): boolean {
+  try {
+    localStorage.setItem(storageKey, JSON.stringify(data));
+    return true;
+  } catch {
+    // Keep the current document usable when browser storage is unavailable or full.
+    return false;
+  }
 }
 
 export function clearQuoteData(): QuoteData {
-  localStorage.removeItem(storageKey);
+  try {
+    localStorage.removeItem(storageKey);
+  } catch {
+    // Reset the in-memory document even when browser storage is unavailable.
+  }
   return createDefaultQuoteData();
 }
