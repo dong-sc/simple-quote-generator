@@ -9,7 +9,7 @@ The existing storage writer/remover threw browser storage exceptions. Autosave r
 `npm test` injects synthetic localStorage adapters; no real drafts or customer data are read.
 - Unmodified baseline: storage tests 2 passed, 2 failed (blocked storage and write failure/recovery).
 - Fixed storage: all 4 storage tests pass.
-- Current complete suite: 6 tests pass.
+- Current complete suite: 8 tests pass.
 - `npm run build` passed, including the existing prerender script.
 - `npm run lint` passed.
 
@@ -18,3 +18,9 @@ Tests cover normal round-trip/reset, read/write/remove exceptions, preservation 
 Limitations: no interactive browser or PDF/Excel visual QA performed; this is deterministic storage/function testing and production compilation. When storage remains blocked, resetting only changes the current in-memory document; an older persisted draft can remain until a later successful save. The alert explicitly states that closing the page can lose current changes. No performance improvement is claimed.
 
 Rollback: revert the fix commit, or discard this isolated clone. Original checkout, GitHub main, live sites, and user data were not modified. Dependencies were copied locally from the original checkout for isolated offline validation; no package upgrade was performed.
+
+## Unread draft preservation (review follow-up)
+
+A parse failure or blocked read previously returned a default document, which mount autosave could write over the original value. A module-level read-failure guard now blocks autosave for this page session until the user explicitly clears the form. The original string is retained untouched. Invalid root shapes (null, array, primitive) and non-string titles are also rejected. No comprehensive nested schema validation was added.
+
+Two new deterministic tests cover corrupt JSON/root shape/title → load → autosave leaving the original bytes unchanged → explicit clear → successful save, and a blocked read followed by restored write access preserving the original draft. On the first fix without this guard both new tests fail (0 passed / 2 failed); with the guard both pass (2 passed / 0 failed) for each tool. Build/prerender/lint were rerun successfully. No calculation code changed.

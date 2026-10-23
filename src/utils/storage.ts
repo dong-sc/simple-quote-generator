@@ -3,11 +3,18 @@ import { createDefaultQuoteData } from './defaultQuote';
 
 const storageKey = 'simple-quote-generator.quote-data';
 
+// Do not let mount autosave overwrite a draft that could not be read.
+let preserveUnreadDraft = false;
+
 function normalizeQuoteData(value: unknown): QuoteData {
   const fallback = createDefaultQuoteData();
 
-  if (!value || typeof value !== 'object') {
-    return fallback;
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    throw new Error('Invalid stored draft');
+  }
+
+  if ('title' in value && typeof value.title !== 'string') {
+    throw new Error('Invalid stored draft title');
   }
 
   const data = value as Partial<QuoteData>;
@@ -45,11 +52,14 @@ export function loadQuoteData(): QuoteData {
 
     return normalizeQuoteData(JSON.parse(storedValue));
   } catch {
+    preserveUnreadDraft = true;
     return createDefaultQuoteData();
   }
 }
 
 export function saveQuoteData(data: QuoteData): boolean {
+  if (preserveUnreadDraft) return false;
+
   try {
     localStorage.setItem(storageKey, JSON.stringify(data));
     return true;
@@ -60,6 +70,8 @@ export function saveQuoteData(data: QuoteData): boolean {
 }
 
 export function clearQuoteData(): QuoteData {
+  // An explicit reset authorizes replacing an unread draft.
+  preserveUnreadDraft = false;
   try {
     localStorage.removeItem(storageKey);
   } catch {

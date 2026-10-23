@@ -81,7 +81,7 @@ export default function App() {
           <div className="form-pane">
             {!draftSaved && (
               <p role="alert">
-                草稿無法儲存在此瀏覽器；目前仍可編輯與匯出。請先匯出或列印，關閉頁面後本次變更可能遺失。
+                草稿未能讀取或儲存，原有儲存內容會保留。目前仍可編輯與匯出，但關閉頁面後本次變更可能遺失；請先匯出或列印。若要捨棄原草稿並重新儲存，請按「清空表單」。
               </p>
             )}
             <ActionBar

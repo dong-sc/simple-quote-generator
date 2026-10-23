@@ -92,3 +92,35 @@ test('quote reimbursement and disabled discount follow form choices', () => {
   assert.equal(calculateTotals({ ...data, reimbursableExpenses: {
     ...data.reimbursableExpenses, taxTreatment: 'included' } }).quoteSubtotal, 1155);
 });
+
+test('unread drafts survive autosave until an explicit reset', () => {
+  for (const original of ['{broken', 'null', '[]', '{"title":42}']) {
+    let persisted = original;
+    globalThis.localStorage = {
+      getItem: () => persisted,
+      setItem: (_key, value) => { persisted = value; },
+      removeItem: () => { persisted = null; },
+    };
+    const fallback = load();
+    assert.equal(save({ ...fallback, title: 'Pending replacement' }), false);
+    assert.equal(persisted, original);
+    const fresh = clear();
+    assert.equal(save({ ...fresh, title: 'Explicit fresh start' }), true);
+    assert.equal(load().title, 'Explicit fresh start');
+  }
+});
+
+test('a temporarily blocked read cannot silently replace the previous draft', () => {
+  let persisted = '{"title":"Original draft"}';
+  let blocked = true;
+  globalThis.localStorage = {
+    getItem: () => { if (blocked) throw new Error('SecurityError'); return persisted; },
+    setItem: (_key, value) => { persisted = value; },
+    removeItem: () => { persisted = null; },
+  };
+  const fallback = load();
+  blocked = false;
+  assert.equal(save(fallback), false);
+  assert.equal(persisted, '{"title":"Original draft"}');
+  assert.equal(save(clear()), true);
+});
