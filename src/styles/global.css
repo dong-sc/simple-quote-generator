@@ -1066,3 +1066,18 @@ textarea:focus {
 }
 
 .dong-tools-family { color: #b7bbb7; font-size: 0.72rem; font-weight: 500; }
+
+/* ---- 手機：先填表，動作列放到後面 ----
+   空表單時「清空表單 / 複製文字版 / 列印」都還用不到，排在最前面只會把
+   第一個欄位推到螢幕外；而且最危險的「清空表單」會落在最顯眼的位置。
+   只調順序，不動 DOM。 */
+@media (max-width: 600px) {
+  .form-pane {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-pane .action-bar {
+    order: 2;
+  }
+}
