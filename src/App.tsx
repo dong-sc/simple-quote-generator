@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ActionBar } from './components/ActionBar';
 import { AuthorPromoSection } from './components/AuthorPromoSection';
+import { CaseworkBar } from './components/CaseworkBar';
 import { DongToolsBar } from './components/DongToolsBar';
 import { Header } from './components/Header';
 import { QuoteForm } from './components/QuoteForm';
@@ -11,6 +12,7 @@ import { calculateTotals } from './utils/calculation';
 import { exportQuoteExcel } from './utils/exportQuoteExcel';
 import { clearQuoteData, loadQuoteData, saveQuoteData } from './utils/storage';
 import { generateQuotePlainText } from './utils/quoteText';
+import { showCaseworkNext } from './utils/casework';
 import type { QuoteData } from './types/quote';
 
 function getPrintableTitle(title: string): string {
@@ -69,12 +71,14 @@ export default function App() {
 
     window.addEventListener('afterprint', restoreTitle);
     window.print();
+    showCaseworkNext();
     window.setTimeout(restoreTitle, 1000);
   }
 
   return (
     <>
       <DongToolsBar />
+      <CaseworkBar />
       <Header />
       <main className="app-shell">
         <section className="workspace" aria-label="報價單製作工作區">
@@ -91,6 +95,7 @@ export default function App() {
               onExportExcel={handleExportExcel}
               onPrint={handlePrint}
             />
+            <div data-casework-next />
             <QuoteForm data={quoteData} onChange={setQuoteData} totals={totals} />
           </div>
           <QuotePreview data={quoteData} totals={totals} />

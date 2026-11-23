@@ -21,6 +21,8 @@
     visibility: visible !important;
   }
 
+  [data-casework-bar],
+  [data-casework-next],
   .dong-tools-bar,
   .site-header,
   .form-pane,
